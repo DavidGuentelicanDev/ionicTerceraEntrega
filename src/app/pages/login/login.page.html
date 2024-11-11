@@ -1,13 +1,28 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="background-general">
+  <!--logo centrado sobre el card-->
+  <div class="logo-container ion-margin-top ion-margin-bottom">
+    <img src="assets/images/libros.avif" alt="Logo" class="logo">
+  </div>
+  <!--card para el formulario del login-->
+  <ion-card>
+    <h4 class="titulo-login">Inicio de sesión</h4>
+    <div class="ion-padding">
+      <div class="ion-padding">
+        <ion-item class="input" lines="none">
+          <ion-input [(ngModel)]="mdl_correo" label="Correo electrónico" labelPlacement="floating" placeholder="correo@duocuc.cl"></ion-input>
+        </ion-item>
+        <ion-item class="ion-margin-top input" lines="none">
+          <ion-input [(ngModel)]="mdl_contrasena" label="Contraseña" labelPlacement="floating" [type]="verContrasena ? 'text' : 'password'" placeholder="Ingresa tu contraseña"></ion-input>
+          <ion-button fill="clear" slot="end" (click)="contrasenaVisible()">
+            <ion-icon [name]="verContrasena ? 'eye' : 'eye-off'" class="ojo-contrasena"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-button (click)="login()" [disabled]="botonDeshabilitado" expand="block" shape="round" color="tertiary" class="ion-margin-top">
+          <ion-spinner *ngIf="spinnerVisible" name="bubbles"></ion-spinner>
+          <span *ngIf="!spinnerVisible">Ingresar</span>
+        </ion-button>
+        <ion-button (click)="navegarCrearUsuario()" expand="block" fill="clear" class="ion-margin-top">Regístrate aquí</ion-button>
+      </div>
+    </div>
+  </ion-card>
 </ion-content>
