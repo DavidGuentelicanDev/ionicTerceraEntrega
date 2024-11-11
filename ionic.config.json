@@ -1,0 +1,7 @@
+{
+  "name": "app-ecd-asistencia",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
