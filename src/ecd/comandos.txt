@@ -7,3 +7,8 @@ ionic g page pages/principal
 ionic g page pages/actualizacion-datos
 ionic g page pages/sedes
 ionic g page pages/asistencia
+
+2. Crear servicios
+
+ionic g service services/api
+ionic g service services/db
