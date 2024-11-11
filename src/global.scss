@@ -35,3 +35,11 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
+
+
+/* MIS CLASES SCSS */
+
+//background general
+.background-general {
+    --background: url('/assets/images/bg_libros.jpg') no-repeat center center / cover;
+}

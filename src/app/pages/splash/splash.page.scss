@@ -1,0 +1,29 @@
+.contenedor {
+    display: flex;
+    flex-direction: column; //coloca el titulo arriba y el logo abajo
+    justify-content: center; //verticalmente
+    align-items: center; //centra horizontalmente
+    height: 100vh; //ocupa toda la altura de la pantalla
+}
+
+.titulo {
+    text-align: center; //centrado
+    font-size: 3rem; //tamaño grande
+    font-weight: bold; //negrita
+    color: #f1f1f1;
+    margin-bottom: 20px; //espacio entre el titulo y el logo
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; //circular
+    border: 3px solid #ddd; //borde
+    object-fit: cover; //la imagen se adapta a su contenedor
+}
