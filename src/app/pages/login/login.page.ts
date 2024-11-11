@@ -48,9 +48,9 @@ export class LoginPage implements OnInit {
     toast.present();
   }
 
-  //funcion para navegar al crear usuario
-  navegarCrearUsuario() {
-    this.router.navigate(['crear-usuario']);
+  //funcion para navegar al registro de usuario
+  navegarRegistroUsuario() {
+    this.router.navigate(['registro-usuario']);
     this.mdl_correo = '';
     this.mdl_contrasena = '';
     this.verContrasena = false;
