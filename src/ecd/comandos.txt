@@ -1,0 +1,9 @@
+1. Crear páginas
+
+ionic g page pages/splash
+ionic g page pages/login
+ionic g page pages/registro-usuario
+ionic g page pages/principal
+ionic g page pages/actualizacion-datos
+ionic g page pages/sedes
+ionic g page pages/asistencia
