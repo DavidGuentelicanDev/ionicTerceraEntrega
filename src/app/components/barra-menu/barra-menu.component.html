@@ -1,24 +1,40 @@
 <ion-menu menuId="menu-end" side="end" contentId="main-content">
   <ion-header>
-    <ion-toolbar class="barra-general">
+    <ion-toolbar class="barra-menu">
       <ion-title>Menú</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
     <ion-item *ngIf="!esLaRutaActual('principal')" lines="none">
-      <ion-button (click)="principal()" fill="clear">Principal</ion-button>
+      <ion-button (click)="principal()" fill="clear" color="dark">
+        <ion-icon name="home" slot="start" class="icono"></ion-icon>
+        Principal
+      </ion-button>
     </ion-item>
     <ion-item *ngIf="!esLaRutaActual('actualizacion-datos')" lines="none">
-      <ion-button (click)="actualizacionDatos()" fill="clear">Actualizar datos</ion-button>
+      <ion-button (click)="actualizacionDatos()" fill="clear" color="dark">
+        <ion-icon name="person-circle-outline" slot="start" class="icono"></ion-icon>
+        Actualizar datos
+      </ion-button>
     </ion-item>
     <ion-item *ngIf="!esLaRutaActual('sedes')" lines="none">
-      <ion-button (click)="sedes()" fill="clear">Sedes</ion-button>
+      <ion-button (click)="sedes()" fill="clear" color="dark">
+        <ion-icon name="business" slot="start" class="icono"></ion-icon>
+        Sedes
+      </ion-button>
     </ion-item>
     <ion-item *ngIf="!esLaRutaActual('asistencia')" lines="none">
-      <ion-button (click)="asistencia()" fill="clear">Asistencia</ion-button>
+      <ion-button (click)="asistencia()" fill="clear" color="dark">
+        <ion-icon name="calendar-outline" slot="start" class="icono"></ion-icon>
+        Asistencia
+      </ion-button>
     </ion-item>
+    <ion-item-divider></ion-item-divider><!--divider-->
     <ion-item lines="none">
-      <ion-button fill="clear">Cerrar Sesión</ion-button>
+      <ion-button (click)="logout()" fill="clear" color="dark">
+        <ion-icon name="log-out-outline" slot="start" class="icono"></ion-icon>
+        Cerrar Sesión
+      </ion-button>
     </ion-item>
   </ion-content>
 </ion-menu>

@@ -70,4 +70,12 @@ export class BarraMenuComponent  implements OnInit {
     return this.rutaActual.includes(ruta);
   }
 
+  logout() {
+    let extras: NavigationExtras = {
+      replaceUrl: true
+    }
+
+    this.router.navigate(['login'], extras);
+  }
+
 }
