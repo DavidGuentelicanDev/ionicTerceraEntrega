@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
+import { AlertController, MenuController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-barra-menu',
@@ -9,13 +9,28 @@ import { MenuController } from '@ionic/angular';
 })
 export class BarraMenuComponent  implements OnInit {
 
+  /* VARIABLES -----------------------------------------------------------------------------------*/
+
   //variables dinamicas del componente
   @Input() titulo: string = '';
   //variable para controlar la visibilidad de los botones segun la pantalla donde este
   rutaActual: string = '';
+  //spinner de recarga
+  spinnerRecarga: boolean = false;
+
+
+  /* CONSTRUCTOR -----------------------------------------------------------------------------------*/
 
   //inyectar dependencias
-  constructor(private menuCtrl: MenuController, private router: Router) { }
+  constructor(
+    private menuCtrl: MenuController,
+    private router: Router,
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController
+  ) { }
+
+
+  /* ngONInit -----------------------------------------------------------------------------------*/
 
   ngOnInit() {
     //detecta la ruta al cargar el componente
@@ -23,6 +38,24 @@ export class BarraMenuComponent  implements OnInit {
       this.rutaActual = this.router.url;
     });
   }
+
+
+  /* TOAST -----------------------------------------------------------------------------------*/
+
+  async mostrarToast(mensaje: string, color: string, duracion: number) {
+    let toast = await this.toastCtrl.create({
+      message: mensaje,
+      color: color,
+      duration: duracion,
+      position: 'bottom',
+      mode: 'md', //diseño de material design
+      cssClass: 'toast' //clase del global.scss
+    });
+    toast.present();
+  }
+
+
+  /* MENU LATERAL -----------------------------------------------------------------------------------*/
 
   //abrir el menu lateral
   abrirMenu() {
@@ -70,12 +103,51 @@ export class BarraMenuComponent  implements OnInit {
     return this.rutaActual.includes(ruta);
   }
 
-  logout() {
+
+  /* CERRAR SESION -----------------------------------------------------------------------------------*/
+
+  //metodo del logout
+  async logout() {
+    this.spinnerRecarga = true;
+
+    // //primero borrar el usuario logueado
+    // await this.eliminarUsuarioLogueado(this.correo);
+
     let extras: NavigationExtras = {
       replaceUrl: true
     }
 
-    this.router.navigate(['login'], extras);
+    this.mostrarToast('Cerrando sesión', 'tertiary', 1500);
+
+    setTimeout(() => {
+      this.spinnerRecarga = false;
+      this.router.navigate(['login'], extras);
+    }, 2000);
+  }
+
+  //funcion para abrir el mensaje de cerrar sesion
+  async cerrarSesion() {
+    let alert = await this.alertCtrl.create({
+      header: 'Cerrar sesión',
+      message: '¿Estás seguro que deseas cerrar sesión?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('DGZ: Cierre de sesión cancelado');
+          }
+        },
+        {
+          text: 'Cerrar',
+          handler: () => {
+            this.logout();
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }

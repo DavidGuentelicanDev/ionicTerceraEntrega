@@ -31,7 +31,7 @@
     </ion-item>
     <ion-item-divider></ion-item-divider><!--divider-->
     <ion-item lines="none">
-      <ion-button (click)="logout()" fill="clear" color="dark">
+      <ion-button (click)="cerrarSesion()" fill="clear" color="dark">
         <ion-icon name="log-out-outline" slot="start" class="icono"></ion-icon>
         Cerrar Sesión
       </ion-button>
@@ -49,3 +49,8 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
+
+<!--spinner de recarga-->
+<div *ngIf="spinnerRecarga" class="spinner-superpuesto">
+  <ion-spinner name="crescent"></ion-spinner>
+</div>
