@@ -16,6 +16,9 @@ export class SedesPage implements OnInit {
   //skeletons
   skeletons = Array(11);
   skeletonsCargando: boolean = true;
+  //modal con detalle por sede
+  modalAbierto: boolean = false;
+  sedeSeleccionada: any = null;
 
 
   /* CONSTRUCTOR ------------------------------------------------------------------------------------- */
@@ -80,6 +83,21 @@ export class SedesPage implements OnInit {
         this.lista_sedes.push(sede);
       }
     }
+  }
+
+  //funcion para abrir el modal con el detalle por sede
+  async abrirModal(sede: any) {
+    this.sedeSeleccionada = sede;
+    this.modalAbierto = true;
+
+    // //verificar si hay me gusta guardado en la tabla me_gusta para cada sede, y contarlos
+    // await this.existeMeGusta();
+    // await this.contarMeGustaPorSede();
+  }
+
+  //funcion para cerrar el modal
+  cerrarModal() {
+    this.modalAbierto = false;
   }
 
 }

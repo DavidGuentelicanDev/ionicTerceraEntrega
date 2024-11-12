@@ -35,3 +35,39 @@ ion-thumbnail {
 ion-item {
     --padding-start: 0;
 }
+
+
+/* MODAL */
+
+ion-modal {
+    --height: 65%;
+    --width: 95%;
+    --border-radius: 16px;
+    --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+ion-modal::part(backdrop) {
+    background: rgba(209, 213, 219);
+    opacity: 1;
+}
+
+ion-modal ion-toolbar {
+    --background: rgb(14 116 144);
+    --color: white;
+}
+
+ion-content {
+    --padding-top: 0;
+    --padding-bottom: 0;
+}
+
+.contenido-scrollable {
+    padding-top: 10px; //altura del toolbar superior
+    padding-bottom: 10px; //altura del toolbar inferior
+    height: calc(100% - 50px); //altura del contenido desplazable
+    overflow-y: auto; //permite el desplazamiento vertical
+}
+
+.corazon {
+    font-size: 1.5rem; //ajusta el tamaño según sea necesario
+}
