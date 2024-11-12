@@ -1,9 +1,62 @@
 <app-barra-menu titulo="ECD Asistencia"></app-barra-menu>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">principal</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="background-general">
+    <!--contenedor para los cards-->
+    <div class="ion-padding">
+        <!--card con datos de usuario-->
+        <ion-card *ngIf="!skeletonsCargando">
+            <ion-card-header>
+                <div class="foto-perfil">
+                    <ion-icon name="person-circle-outline"></ion-icon>
+                </div>
+                <ion-card-title class="titulo-centrado">Bienvenido/a {{ nombre }} {{ apellido }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>{{ correo }}</p>
+                <p>{{ carrera }}</p>
+            </ion-card-content>
+        </ion-card>
+        <!-- Skeleton para datos de usuario -->
+        <ion-card *ngIf="skeletonsCargando">
+            <ion-card-header>
+                <div class="foto-perfil">
+                    <ion-skeleton-text animated style="width: 150px; height: 150px; border-radius: 50%;"></ion-skeleton-text>
+                </div>
+                <ion-card-title class="titulo-centrado">
+                    <ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
+                </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p><ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text></p>
+                <p><ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text></p>
+            </ion-card-content>
+        </ion-card>
+        <!--card con asignaturas-->
+        <ion-card *ngIf="!skeletonsCargando">
+            <ion-card-header>
+                <!--datos de perfil-->
+                <ion-card-title class="titulo-centrado">Asignaturas</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>Asignatura 1</p>
+                <p>Asignatura 2</p>
+                <p>Asignatura 3</p>
+                <p>Asignatura 4</p>
+            </ion-card-content>
+        </ion-card>
+        <!-- Skeleton para asignaturas -->
+        <ion-card *ngIf="skeletonsCargando">
+            <ion-card-header>
+                <ion-card-title class="titulo-centrado">
+                    <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+                </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
+                <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
+                <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
+                <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
+            </ion-card-content>
+        </ion-card>
+    </div>
 </ion-content>

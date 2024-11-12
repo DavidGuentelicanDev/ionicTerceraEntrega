@@ -1,0 +1,22 @@
+/* CARD CON DATOS DE PERFIL Y ASIGNATURAS */
+
+//foto de perfil
+.foto-perfil {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px; //espacio debajo de la foto
+}
+
+.foto-perfil ion-icon {
+    font-size: 150px; //tamaño del icono
+    color: #555; //color del icono
+    border-radius: 50%; //hace el icono circular
+    border: 3px solid #ccc; //borde circular
+}
+
+//titulo centrado
+.titulo-centrado {
+    text-align: center; //centrar el texto
+    font-size: 1.2rem; //tamaño de fuente ajustado
+    margin-top: 5px; //espacio entre la foto y el titulo
+}
