@@ -8,12 +8,16 @@ import { ActualizacionDatosPageRoutingModule } from './actualizacion-datos-routi
 
 import { ActualizacionDatosPage } from './actualizacion-datos.page';
 
+//importar componente
+import { ComponentsModule } from 'src/app/components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ActualizacionDatosPageRoutingModule
+    ActualizacionDatosPageRoutingModule,
+    ComponentsModule //agregar
   ],
   declarations: [ActualizacionDatosPage]
 })

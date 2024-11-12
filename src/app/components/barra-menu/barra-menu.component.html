@@ -1,0 +1,32 @@
+<ion-menu side="end" contentId="main-content">
+  <ion-header>
+    <ion-toolbar class="barra-general">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-item lines="none">
+      <ion-button fill="clear">Actualizar datos</ion-button>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-button fill="clear">Sedes</ion-button>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-button fill="clear">Asistencia</ion-button>
+    </ion-item>
+    <ion-item lines="none">
+      <ion-button fill="clear">Cerrar Sesión</ion-button>
+    </ion-item>
+  </ion-content>
+</ion-menu>
+
+<ion-header [translucent]="true" id="main-content">
+  <ion-toolbar class="barra-general">
+    <ion-title>{{ titulo }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="abrirMenu()">
+        <ion-icon slot="icon-only" name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

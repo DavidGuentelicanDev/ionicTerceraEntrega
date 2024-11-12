@@ -12,3 +12,8 @@ ionic g page pages/asistencia
 
 ionic g service services/api
 ionic g service services/db
+
+3. Crear componentes
+
+ionic g module 
+ionic g component components/barra-menu

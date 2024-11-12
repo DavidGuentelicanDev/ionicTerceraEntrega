@@ -8,12 +8,16 @@ import { AsistenciaPageRoutingModule } from './asistencia-routing.module';
 
 import { AsistenciaPage } from './asistencia.page';
 
+//importar componente
+import { ComponentsModule } from 'src/app/components/components.module';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    AsistenciaPageRoutingModule
+    AsistenciaPageRoutingModule,
+    ComponentsModule //agregar
   ],
   declarations: [AsistenciaPage]
 })
