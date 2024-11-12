@@ -1,3 +1,35 @@
 <app-barra-menu titulo="Sedes"></app-barra-menu>
 
-<ion-content [fullscreen]="true" class="background-general"></ion-content>
+<ion-content [fullscreen]="true" class="background-general">
+    <!--contenedor para los cards-->
+    <div class="ion-padding">
+        <!--card con sedes cuando se carguen-->
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Sedes DUOC UC</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <!--mostrar skeletons si está cargando-->
+                <ion-list *ngIf="skeletonsCargando">
+                    <ion-item *ngFor="let s of skeletons" lines="none">
+                        <ion-thumbnail slot="start" class="skeleton-image"></ion-thumbnail>
+                        <ion-label>
+                            <div class="skeleton-text"></div>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+                <!--mostrar sedes cuando termine de cargar-->
+                <ion-list *ngIf="!skeletonsCargando">
+                    <ion-item *ngFor="let sede of lista_sedes" lines="none">
+                        <ion-thumbnail slot="start">
+                            <img alt="Foto de la sede" [src]="sede.imagen" />
+                        </ion-thumbnail>
+                        <ion-label>
+                            <p><strong>{{ sede.nombre }}</strong></p>
+                        </ion-label>
+                    </ion-item>
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+    </div>
+</ion-content>

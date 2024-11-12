@@ -8,10 +8,17 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
 
-  //url general
+  /* URL DUOC ------------------------------------------------------------------------------------ */
+
   URL_DUOC: string = 'https://www.s2-studio.cl';
 
+
+  /* CONSTRUCTOR ------------------------------------------------------------------------------------ */
+
   constructor(private http: HttpClient) { }
+
+
+  /* API DUOC ------------------------------------------------------------------------------------ */
 
   //funcion de creacion de usuario
   crearUsuario(correo: string, contrasena: string, nombre: string, apellido: string, carrera: string) {
@@ -34,6 +41,11 @@ export class ApiService {
 
     //api POST
     return this.http.post(this.URL_DUOC + '/api_duoc/usuario/usuario_login', usuario).pipe();
+  }
+
+  //mostrar sedes
+  mostrarSedes() {
+    return this.http.get(this.URL_DUOC + '/api_duoc/usuario/sedes_obtener').pipe();
   }
 
 }

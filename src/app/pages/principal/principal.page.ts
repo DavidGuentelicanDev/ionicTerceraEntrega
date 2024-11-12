@@ -25,7 +25,7 @@ export class PrincipalPage implements OnInit {
 
   /* ngOnInit --------------------------------------------------------------------------------- */
 
-  ngOnInit() {
+  async ngOnInit() {
     //PARA LOS SKELETONS
     this.skeletonsCargando = true;
 
