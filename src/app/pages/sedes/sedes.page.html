@@ -11,8 +11,8 @@
             <ion-card-content>
                 <!--mostrar skeletons si está cargando-->
                 <ion-list *ngIf="skeletonsCargando">
-                    <ion-item *ngFor="let s of skeletons" lines="none">
-                        <ion-thumbnail slot="start" class="skeleton-image"></ion-thumbnail>
+                    <ion-item *ngFor="let s of skeletons" lines="none" class="item-card">
+                        <ion-thumbnail slot="start" class="thumbnail-card skeleton-image"></ion-thumbnail>
                         <ion-label>
                             <div class="skeleton-text"></div>
                         </ion-label>
@@ -20,8 +20,8 @@
                 </ion-list>
                 <!--mostrar sedes cuando termine de cargar-->
                 <ion-list *ngIf="!skeletonsCargando">
-                    <ion-item *ngFor="let sede of lista_sedes" (click)="abrirModal(sede)" lines="none">
-                        <ion-thumbnail slot="start">
+                    <ion-item *ngFor="let sede of lista_sedes" (click)="abrirModal(sede)" lines="none" class="item-card">
+                        <ion-thumbnail slot="start" class="thumbnail-card">
                             <img alt="Foto de la sede" [src]="sede.imagen" />
                         </ion-thumbnail>
                         <ion-label>
@@ -33,11 +33,11 @@
         </ion-card>
     </div>
     <!--modal para informacion de sedes-->
-    <ion-modal [isOpen]="modalAbierto" backdropDismiss="false">
+    <ion-modal [isOpen]="modalAbierto" backdropDismiss="false" class="modal">
         <ng-template>
-            <ion-content>
+            <ion-content class="content-modal">
                 <!--toolbar del modal-->
-                <ion-toolbar>
+                <ion-toolbar class="color-toolbar-modal">
                     <ion-title>{{ sedeSeleccionada?.nombre }}</ion-title>
                     <ion-buttons slot="end">
                         <ion-button color="light" (click)="cerrarModal()">
@@ -53,7 +53,7 @@
                     </div>
                     <!--datos de la sede-->
                     <ion-list class="ion-margin-horizontal">
-                        <ion-item lines="none">
+                        <ion-item lines="none" class="item-card">
                             <ion-label>
                                 <p><strong>Dirección:</strong> {{ sedeSeleccionada?.direccion }}</p>
                                 <p><strong>Teléfono:</strong> {{ sedeSeleccionada?.telefono }}</p>
@@ -64,7 +64,7 @@
                 </div>
             </ion-content>
             <!--toolbar debajo de la lista con botones-->
-            <ion-toolbar>
+            <ion-toolbar class="color-toolbar-modal">
                 <ion-buttons slot="start">
                     <ion-button (click)="darLike()" [color]="colorLike">
                         <ion-icon [name]="tipoLike" class="corazon"></ion-icon>

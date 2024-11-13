@@ -12,6 +12,7 @@ import { DbService } from 'src/app/services/db.service';
 export class SedesPage implements OnInit {
 
   /* VARIABLES --------------------------------------------------------------------------------------- */
+  
   //lista para las sedes
   lista_sedes: any[] = [];
   //skeletons
@@ -148,7 +149,7 @@ export class SedesPage implements OnInit {
       try {
         //guardar like en la tabla megusta
         await this.guardarLike();
-        await this.contarLikePorSede();
+        await this.contarLikePorSede(); //actualiza el contador
         this.mostrarToast('Me gusta', 'dark', 1000);
       } catch (e) {
         console.log('DGZ: Error al guardar me gusta ' + JSON.stringify(e));
@@ -161,7 +162,7 @@ export class SedesPage implements OnInit {
       try {
         //eliminar el like de la tabla megusta
         await this.eliminarLike();
-        await this.contarLikePorSede();
+        await this.contarLikePorSede(); //actualiza el contador
         this.mostrarToast('Ya NO me gusta', 'dark', 1000);
       } catch (e) {
         console.log('DGZ: Error al eliminar me gusta ' + JSON.stringify(e));

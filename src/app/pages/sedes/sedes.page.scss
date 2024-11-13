@@ -1,6 +1,6 @@
 /* CARD DE LAS SEDES */
 
-ion-thumbnail {
+.thumbnail-card {
     width: 70px; //ajusta el tamaño del thumbnail
     height: 70px;
 }
@@ -32,14 +32,14 @@ ion-thumbnail {
 }
 
 //item del card
-ion-item {
+.item-card {
     --padding-start: 0;
 }
 
 
 /* MODAL */
 
-ion-modal {
+.modal {
     --height: 65%;
     --width: 95%;
     --border-radius: 16px;
@@ -51,12 +51,12 @@ ion-modal::part(backdrop) {
     opacity: 1;
 }
 
-ion-modal ion-toolbar {
+.color-toolbar-modal {
     --background: rgb(14 116 144);
     --color: white;
 }
 
-ion-content {
+.content-modal {
     --padding-top: 0;
     --padding-bottom: 0;
 }
