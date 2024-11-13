@@ -18,7 +18,7 @@ export class ApiService {
   constructor(private http: HttpClient) { }
 
 
-  /* API DUOC ------------------------------------------------------------------------------------ */
+  /* API DUOC 1 ------------------------------------------------------------------------------------ */
 
   //funcion de creacion de usuario
   crearUsuario(correo: string, contrasena: string, nombre: string, apellido: string, carrera: string) {
@@ -46,6 +46,17 @@ export class ApiService {
   //mostrar sedes
   mostrarSedes() {
     return this.http.get(this.URL_DUOC + '/api_duoc/usuario/sedes_obtener').pipe();
+  }
+
+  //actualizar contraseña y carrera
+  actualizarUsuario(correo: string, contrasena: string, carrera: string) {
+    let usuario: any = {};
+    usuario.correo = correo;
+    usuario.contrasena = contrasena;
+    usuario.carrera = carrera;
+
+    //api PATCH
+    return this.http.patch(this.URL_DUOC + '/api_duoc/usuario/usuario_modificar', usuario).pipe();
   }
 
 }
