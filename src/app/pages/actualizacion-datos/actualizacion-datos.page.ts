@@ -3,6 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-actualizacion-datos',
@@ -18,8 +19,6 @@ export class ActualizacionDatosPage implements OnInit {
   mdl_contrasenaNueva: string = '';
   mdl_confirmarContrasenaNueva: string = '';
   mdl_carrera: string = '';
-  //correo
-  correo: string = '';
   //correo logueado
   correoLogueado: string = '';
   //spinner de recarga
@@ -39,13 +38,15 @@ export class ActualizacionDatosPage implements OnInit {
   constructor(
     private router: Router,
     private api: ApiService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private db: DbService
   ) { }
 
 
   /* ngOnInit ---------------------------------------------------------------------------------------- */
 
-  ngOnInit() {
+  async ngOnInit() {
+    await this.validarUsuarioLogueado(); //validar que exista usuario al ingresar a la pantalla
   }
 
 
@@ -61,6 +62,18 @@ export class ActualizacionDatosPage implements OnInit {
       cssClass: 'toast' //clase del global.scss
     });
     toast.present();
+  }
+
+
+  /* VALIDAR USUARIO LOGUEADO ----------------------------------------------------------------------- */
+
+  async validarUsuarioLogueado() {
+    let usuario = await this.db.obtenerUsuarioLogueado();
+    
+    if (usuario) {
+      this.correoLogueado = usuario.correo;
+      console.log('DGZ: usuario en la db ' + this.correoLogueado);
+    }
   }
 
 

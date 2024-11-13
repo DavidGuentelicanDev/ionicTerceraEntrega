@@ -37,21 +37,21 @@ export class PrincipalPage implements OnInit {
   /* ngOnInit --------------------------------------------------------------------------------- */
 
   async ngOnInit() {
-    //PARA LOS SKELETONS
-    this.skeletonsCargando = true;
-
-    await this.mostrarUsuarioLogueado(); //mostrar usuario logueado guardado en db
-
-    setTimeout(async () => {
-      this.skeletonsCargando = false;
-    }, 2000); //mantener skeletons n seg.
-
     //extras para reiniciar luego de cambiar contraseña
     let extras = this.router.getCurrentNavigation()?.extras;
 
     if (extras?.state) {
       this.reiniciar();
     }
+
+    //para los skeletons
+    this.skeletonsCargando = true;
+
+    await this.mostrarUsuarioLogueado(); //mostrar usuario logueado guardado en db
+
+    setTimeout(async () => {
+      this.skeletonsCargando = false;
+    }, 1000); //mantener skeletons n seg.
   }
 
 
