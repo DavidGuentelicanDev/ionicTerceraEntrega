@@ -34,14 +34,10 @@
         <!--card con asignaturas-->
         <ion-card *ngIf="!skeletonsCargando">
             <ion-card-header>
-                <!--datos de perfil-->
                 <ion-card-title class="titulo-centrado">Asignaturas</ion-card-title>
             </ion-card-header>
-            <ion-card-content>
-                <p>Asignatura 1</p>
-                <p>Asignatura 2</p>
-                <p>Asignatura 3</p>
-                <p>Asignatura 4</p>
+            <ion-card-content *ngFor="let asignatura of lista_asignaturas">
+                <p>{{ asignatura.nombre }}</p>
             </ion-card-content>
         </ion-card>
         <!-- Skeleton para asignaturas -->
@@ -52,10 +48,9 @@
                 </ion-card-title>
             </ion-card-header>
             <ion-card-content>
-                <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
-                <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
-                <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
-                <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
+                <p *ngFor="let _ of [1, 2, 3, 4]"> <!--emular las 4 asignaturas-->
+                    <ion-skeleton-text animated style="width: 80%; margin-bottom: 25px;"></ion-skeleton-text>
+                </p>
             </ion-card-content>
         </ion-card>
     </div>

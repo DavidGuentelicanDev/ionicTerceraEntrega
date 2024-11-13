@@ -8,9 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ApiService {
 
-  /* URL DUOC ------------------------------------------------------------------------------------ */
+  /* URLS Y VARIABLES ------------------------------------------------------------------------------ */
 
+  //url general
   URL_DUOC: string = 'https://www.s2-studio.cl';
+  //correo logueado para asignaturas y asistencia
+  correoUsuario: string = '';
 
 
   /* CONSTRUCTOR ------------------------------------------------------------------------------------ */
@@ -62,6 +65,9 @@ export class ApiService {
 
   /* API DUOC 2 ------------------------------------------------------------------------------------ */
 
-  
+  //obtener datos de asignaturas y asistencia
+  obtenerAsignaturasYAsistencia() {
+    return this.http.get(this.URL_DUOC + '/api_duoc/usuario/asistencia_obtener?correo=' + this.correoUsuario).pipe();
+  }
 
 }
