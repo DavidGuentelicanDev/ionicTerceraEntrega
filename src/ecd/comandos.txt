@@ -8,12 +8,39 @@ ionic g page pages/actualizacion-datos
 ionic g page pages/sedes
 ionic g page pages/asistencia
 
+
 2. Crear servicios
 
 ionic g service services/api
 ionic g service services/db
 
+
 3. Crear componentes
 
-ionic g module 
+ionic g module components
 ionic g component components/barra-menu
+
+
+4. Instalar SQLite
+
+npm install cordova-sqlite-storage
+npm install @awesome-cordova-plugins/sqlite
+
+
+5. Instalar mlkit
+
+npm install @capacitor-mlkit/barcode-scanning
+
+
+6. Nativizar
+
+ionic cap sync
+npm install @capacitor/android
+npx cap add android
+
+ionic cap run android --livereload --external
+
+
+7. Abrir con Android Studio y generar APK
+
+npx cap open android
