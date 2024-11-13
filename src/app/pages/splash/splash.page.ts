@@ -21,7 +21,7 @@ export class SplashPage implements OnInit {
     //para la base de datos local
     await this.db.abrirDB();
     await this.db.crearTablaUsuarioLogueado();
-    //await this.db.crearTablaMeGusta();
+    await this.db.crearTablaLike();
 
     let extras: NavigationExtras = {
       replaceUrl: true
