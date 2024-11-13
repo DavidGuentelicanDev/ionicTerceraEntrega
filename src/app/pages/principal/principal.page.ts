@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-principal',
@@ -28,7 +29,8 @@ export class PrincipalPage implements OnInit {
   constructor(
     private router: Router,
     private alertCtrl: AlertController,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private db: DbService
   ) { }
 
 
@@ -38,7 +40,7 @@ export class PrincipalPage implements OnInit {
     //PARA LOS SKELETONS
     this.skeletonsCargando = true;
 
-    // await this.mostrarUsuarioLogueado(); //mostrar usuario logueado guardado en db
+    await this.mostrarUsuarioLogueado(); //mostrar usuario logueado guardado en db
 
     setTimeout(async () => {
       this.skeletonsCargando = false;
@@ -68,14 +70,29 @@ export class PrincipalPage implements OnInit {
   }
 
 
+  /* OBTENER USUARIO LOGUEADO ----------------------------------------------------------------------- */
+
+  async mostrarUsuarioLogueado() {
+    let usuario = await this.db.obtenerUsuarioLogueado();
+    
+    if (usuario) {
+      this.correo = usuario.correo;
+      this.nombre = usuario.nombre;
+      this.apellido = usuario.apellido;
+      this.carrera = usuario.carrera;
+      console.log('DGZ: usuario en la db ' + this.correo + ' ' + this.nombre + ' ' + this.apellido + ' ' + this.carrera);
+    }
+  }
+
+
   /* REINICIAR LUEGO DE ACTUALIZAR DATOS ------------------------------------------------------------- */
 
   //metodo del logout
   async logout() {
     this.spinnerRecarga = true;
 
-    // //primero borrar el usuario logueado
-    // await this.eliminarUsuarioLogueado(this.correo);
+    //primero borrar el usuario logueado
+    await this.eliminarUsuarioLogueado(this.correo);
 
     let extras: NavigationExtras = {
       replaceUrl: true
@@ -106,6 +123,11 @@ export class PrincipalPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  //funcion para borrar usuario logueado
+  async eliminarUsuarioLogueado(correo: string) {
+    await this.db.eliminarUsuarioLogueado(correo);
   }
 
 }
