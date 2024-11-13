@@ -46,7 +46,7 @@
           </ion-button>
         </ion-input>
       </ion-item>
-      <ion-button (click)="crearUsuario()" [disabled]="botonDeshabilitado" expand="block" shape="round" color="tertiary" class="ion-margin-top">
+      <ion-button (click)="registroUsuario()" [disabled]="botonDeshabilitado" expand="block" shape="round" color="tertiary" class="ion-margin-top">
         <ion-spinner *ngIf="spinnerVisible" name="bubbles"></ion-spinner>
         <span *ngIf="!spinnerVisible">Registrarse</span>
       </ion-button>

@@ -11,6 +11,8 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class RegistroUsuarioPage implements OnInit {
 
+  /* VARIABLES ------------------------------------------------------------------------------------ */
+
   //modelos para crear usuario
   mdl_correo: string = '';
   mdl_contrasena: string = '';
@@ -28,13 +30,25 @@ export class RegistroUsuarioPage implements OnInit {
   verContrasena: boolean = false;
   verConfirmarContrasena: boolean = false;
 
+
+  /* CONSTRUCTOR ------------------------------------------------------------------------------------ */
+
   //inyectar dependencias
-  constructor(private router: Router, private api: ApiService, private toastCtrl: ToastController) { }
+  constructor(
+    private router: Router,
+    private api: ApiService,
+    private toastCtrl: ToastController
+  ) { }
+
+
+  /* ngOnInit --------------------------------------------------------------------------------------- */
 
   ngOnInit() {
   }
 
-  //funcion del toast
+
+  /* TOAST ----------------------------------------------------------------------------------------- */
+
   async mostrarToast(mensaje: string, color: string, duracion: number) {
     let toast = await this.toastCtrl.create({
       message: mensaje,
@@ -47,8 +61,10 @@ export class RegistroUsuarioPage implements OnInit {
     toast.present();
   }
 
-  //funcion para crear o registrar un usuario
-  async crearUsuario() {
+
+  /* REGISTRO DE USUARIO --------------------------------------------------------------------------- */
+
+  async registroUsuario() {
     this.spinnerVisible = true;
     this.botonDeshabilitado = true;
 
@@ -137,6 +153,9 @@ export class RegistroUsuarioPage implements OnInit {
       this.spinnerVisible = false;
     }, 1000);
   }
+
+
+  /* OJO CONTRASEÑA -------------------------------------------------------------------------------- */
 
   //contraseña visible
   contrasenaVisible() {

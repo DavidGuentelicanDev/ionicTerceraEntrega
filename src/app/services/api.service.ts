@@ -59,4 +59,9 @@ export class ApiService {
     return this.http.patch(this.URL_DUOC + '/api_duoc/usuario/usuario_modificar', usuario).pipe();
   }
 
+
+  /* API DUOC 2 ------------------------------------------------------------------------------------ */
+
+  
+
 }

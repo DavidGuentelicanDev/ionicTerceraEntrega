@@ -11,6 +11,8 @@ import { ApiService } from 'src/app/services/api.service';
 })
 export class LoginPage implements OnInit {
 
+  /* VARIABLES ----------------------------------------------------------------------------------- */
+
   //modelos del login
   mdl_correo: string = '';
   mdl_contrasena: string = '';
@@ -28,13 +30,25 @@ export class LoginPage implements OnInit {
   //contraseña visible
   verContrasena: boolean = false;
 
+
+  /* CONSTRUCTOR ------------------------------------------------------------------------------------- */
+
   //inyectar dependencias
-  constructor(private router: Router, private api: ApiService, private toastCtrl: ToastController) { }
+  constructor(
+    private router: Router,
+    private api: ApiService,
+    private toastCtrl: ToastController
+  ) { }
+
+
+  /* ngOnInit ---------------------------------------------------------------------------------------- */
 
   ngOnInit() {
   }
 
-  //funcion del toast
+
+  /* TOAST ----------------------------------------------------------------------------------------- */
+
   async mostrarToast(mensaje: string, color: string, duracion: number) {
     let toast = await this.toastCtrl.create({
       message: mensaje,
@@ -48,7 +62,9 @@ export class LoginPage implements OnInit {
     toast.present();
   }
 
-  //funcion para navegar al registro de usuario
+
+  /* NAVEGAR AL REGISTRO --------------------------------------------------------------------------- */
+
   navegarRegistroUsuario() {
     this.router.navigate(['registro-usuario']);
     this.mdl_correo = '';
@@ -66,7 +82,9 @@ export class LoginPage implements OnInit {
   //   );
   // }
 
-  //funcion para login
+
+  /* LOGIN ---------------------------------------------------------------------------------------- */
+
   async login() {
     this.spinnerVisible = true;
     this.botonDeshabilitado = true;
@@ -112,7 +130,9 @@ export class LoginPage implements OnInit {
     }, 1000);
   }
 
-  //contraseña visible
+
+  /* OJO CONTRASEÑA ------------------------------------------------------------------------------- */
+
   contrasenaVisible() {
     this.verContrasena = !this.verContrasena; //alterna la visibilidad de la contraseña
   }
