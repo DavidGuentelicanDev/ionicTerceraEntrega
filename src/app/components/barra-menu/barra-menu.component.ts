@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { AlertController, MenuController, ToastController } from '@ionic/angular';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-barra-menu',
@@ -17,6 +18,8 @@ export class BarraMenuComponent  implements OnInit {
   rutaActual: string = '';
   //spinner de recarga
   spinnerRecarga: boolean = false;
+  //para obtener el correo logueado
+  correoLogueado: string = '';
 
 
   /* CONSTRUCTOR -----------------------------------------------------------------------------------*/
@@ -26,17 +29,20 @@ export class BarraMenuComponent  implements OnInit {
     private menuCtrl: MenuController,
     private router: Router,
     private toastCtrl: ToastController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private db: DbService
   ) { }
 
 
   /* ngONInit -----------------------------------------------------------------------------------*/
 
-  ngOnInit() {
+  async ngOnInit() {
     //detecta la ruta al cargar el componente
     this.router.events.subscribe(() => {
       this.rutaActual = this.router.url;
     });
+
+    await this.obtenerCorreoLogueado(); //obtener el correo registrado en la base de datos al iniciar cualquier pantalla con este componente
   }
 
 
@@ -104,14 +110,26 @@ export class BarraMenuComponent  implements OnInit {
   }
 
 
+  /* RESCATAR CORREO ------------------------------------------------------------------------------- */
+
+  async obtenerCorreoLogueado() {
+    let usuario = await this.db.obtenerUsuarioLogueado();
+
+    if (usuario) {
+      this.correoLogueado = usuario.correo;
+      console.log('DGZ: CORREO LOGUEADO ' + this.correoLogueado);
+    }
+  }
+
+
   /* CERRAR SESION -----------------------------------------------------------------------------------*/
 
   //metodo del logout
   async logout() {
     this.spinnerRecarga = true;
 
-    // //primero borrar el usuario logueado
-    // await this.eliminarUsuarioLogueado(this.correo);
+    //primero borrar el usuario logueado
+    await this.eliminarUsuarioLogueado(this.correoLogueado);
 
     let extras: NavigationExtras = {
       replaceUrl: true
@@ -148,6 +166,11 @@ export class BarraMenuComponent  implements OnInit {
     });
 
     await alert.present();
+  }
+
+  //funcion para borrar usuario logueado
+  async eliminarUsuarioLogueado(correo: string) {
+    await this.db.eliminarUsuarioLogueado(correo);
   }
 
 }

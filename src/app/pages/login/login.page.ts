@@ -3,6 +3,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
+import { DbService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'app-login',
@@ -37,7 +38,8 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private api: ApiService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private db: DbService
   ) { }
 
 
@@ -72,16 +74,6 @@ export class LoginPage implements OnInit {
     this.verContrasena = false;
   }
 
-  // //funcion para guardar el usuario logueado
-  // async guardarUsuarioLogueado() {
-  //   await this.db.guardarUsuarioLogueado(
-  //     this.db_correo,
-  //     this.db_nombre,
-  //     this.db_apellido,
-  //     this.db_carrera
-  //   );
-  // }
-
 
   /* LOGIN ---------------------------------------------------------------------------------------- */
 
@@ -110,7 +102,7 @@ export class LoginPage implements OnInit {
         this.db_nombre = json.usuario.nombre;
         this.db_apellido = json.usuario.apellido;
         this.db_carrera = json.usuario.carrera;
-        //await this.guardarUsuarioLogueado(); //guardando usuario
+        await this.guardarUsuarioLogueado(); //guardando usuario
 
         //extras
         let extras: NavigationExtras = {
@@ -128,6 +120,16 @@ export class LoginPage implements OnInit {
 
       this.spinnerVisible = false;
     }, 1000);
+  }
+
+  //funcion para guardar el usuario logueado
+  async guardarUsuarioLogueado() {
+    await this.db.guardarUsuarioLogueado(
+      this.db_correo,
+      this.db_nombre,
+      this.db_apellido,
+      this.db_carrera
+    );
   }
 
 
