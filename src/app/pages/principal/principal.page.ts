@@ -153,10 +153,7 @@ export class PrincipalPage implements OnInit {
       //recorrer segundo arreglo
       for (let y = 0; y < json[x].length; y++) {
         let asignatura: any = {}; //objeto que recibira cada asignatura
-        asignatura.sigla = json[x][y].curso_sigla;
         asignatura.nombre = json[x][y].curso_nombre;
-        asignatura.presente = json[x][y].presente;
-        asignatura.ausente = json[x][y].ausente;
 
         this.lista_asignaturas.push(asignatura); //guardar en la lista
       }
