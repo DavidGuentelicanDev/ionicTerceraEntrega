@@ -174,10 +174,10 @@ export class AsistenciaPage implements OnInit {
       console.log('DGZ QR: ' + this.textoQR);
     }
 
-    let textoSeparado = this.textoQR.split('|');
+    let textoSeparado = this.textoQR.split('|'); //funcion split
     console.log('DGZ QR separado: ' + textoSeparado);
 
-    //extraer y asignar el texto a variables
+    //extraer del split y asignar el texto a variables
     this.siglaQR = textoSeparado[0];
     this.nombreQR = textoSeparado[1];
     this.fechaClaseQR = textoSeparado[2];

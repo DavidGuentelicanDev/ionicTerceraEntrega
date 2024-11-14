@@ -109,7 +109,7 @@ export class LoginPage implements OnInit {
           replaceUrl: true
         }
 
-        this.mostrarToast('Navegando a la página principal', 'success', 2000);
+        this.mostrarToast('Bienvenid@ ' + this.db_nombre + ' ' + this.db_apellido , 'success', 3000);
         this.spinnerRecarga = true; //carga un spinner que ocupa toda la pantalla mientras navega al principal
 
         setTimeout(() => {

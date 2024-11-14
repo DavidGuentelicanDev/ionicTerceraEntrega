@@ -11,7 +11,7 @@
             <ion-card-content>
                 <!--mostrar skeletons si está cargando-->
                 <ion-list *ngIf="skeletonsCargando">
-                    <ion-item *ngFor="let s of skeletons" lines="none" class="item-card">
+                    <ion-item *ngFor="let sede of lista_sedes" class="item-card">
                         <ion-thumbnail slot="start" class="thumbnail-card skeleton-image"></ion-thumbnail>
                         <ion-label>
                             <div class="skeleton-text"></div>
@@ -20,7 +20,7 @@
                 </ion-list>
                 <!--mostrar sedes cuando termine de cargar-->
                 <ion-list *ngIf="!skeletonsCargando">
-                    <ion-item *ngFor="let sede of lista_sedes" (click)="abrirModal(sede)" lines="none" class="item-card">
+                    <ion-item *ngFor="let sede of lista_sedes" (click)="abrirModal(sede)" class="item-card">
                         <ion-thumbnail slot="start" class="thumbnail-card">
                             <img alt="Foto de la sede" [src]="sede.imagen" />
                         </ion-thumbnail>

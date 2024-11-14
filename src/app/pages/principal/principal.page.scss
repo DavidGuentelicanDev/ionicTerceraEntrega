@@ -1,5 +1,32 @@
 /* CARD CON DATOS DE PERFIL Y ASIGNATURAS */
 
+//backround del card
+.card-background {
+    position: relative; //asegura que el pseudo-elemento se posicione relativo al card
+    overflow: hidden; //oculta cualquier parte del fondo que sobresalga del card
+}
+
+.card-background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/images/asignaturas-principal.svg');
+    background-size: 80%; //ajusta el tamaño de la imagen
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.3; //controla la transparencia de la imagen de fondo
+    z-index: 0; //envia la imagen al fondo
+}
+
+.card-background ion-card-header,
+.card-background ion-card-content {
+    position: relative;
+    z-index: 1; //eleva el contenido sobre el fondo
+}
+
 //foto de perfil
 .foto-perfil {
     display: flex;
@@ -9,7 +36,7 @@
 
 .foto-perfil ion-icon {
     font-size: 150px; //tamaño del icono
-    color: #555; //color del icono
+    color: #2b2b2b; //color del icono
     border-radius: 50%; //hace el icono circular
     border: 3px solid #ccc; //borde circular
 }

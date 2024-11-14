@@ -4,16 +4,22 @@
     <!--contenedor para los cards-->
     <div class="ion-padding">
         <!--card con datos de usuario-->
-        <ion-card *ngIf="!skeletonsCargando">
+        <ion-card *ngIf="!skeletonsCargando" class="card-background">
             <ion-card-header>
                 <div class="foto-perfil">
-                    <ion-icon name="person-circle-outline"></ion-icon>
+                    <ion-icon name="person-circle"></ion-icon>
                 </div>
-                <ion-card-title class="titulo-centrado">Bienvenido/a {{ nombre }} {{ apellido }}</ion-card-title>
+                <ion-card-title class="titulo-centrado">{{ nombre }} {{ apellido }}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-                <p>{{ correo }}</p>
-                <p>{{ carrera }}</p>
+                <li><strong>{{ correo }}</strong></li>
+                <li><strong>{{ carrera }}</strong></li>
+            </ion-card-content>
+            <ion-card-content>
+                <ion-card-title class="ion-margin-bottom">Asignaturas inscritas</ion-card-title>
+                <ng-container *ngFor="let asignatura of lista_asignaturas">
+                    <li>{{ asignatura.nombre }}</li>
+                </ng-container>
             </ion-card-content>
         </ion-card>
         <!-- Skeleton para datos de usuario -->
@@ -23,34 +29,21 @@
                     <ion-skeleton-text animated style="width: 150px; height: 150px; border-radius: 50%;"></ion-skeleton-text>
                 </div>
                 <ion-card-title class="titulo-centrado">
-                    <ion-skeleton-text animated style="width: 70%;"></ion-skeleton-text>
+                    <ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text>
                 </ion-card-title>
             </ion-card-header>
-            <ion-card-content>
+            <ion-card-content class="ion-margin-top">
                 <p><ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text></p>
                 <p><ion-skeleton-text animated style="width: 60%;"></ion-skeleton-text></p>
             </ion-card-content>
-        </ion-card>
-        <!--card con asignaturas-->
-        <ion-card *ngIf="!skeletonsCargando">
-            <ion-card-header>
-                <ion-card-title class="titulo-centrado">Asignaturas</ion-card-title>
-            </ion-card-header>
-            <ion-card-content *ngFor="let asignatura of lista_asignaturas">
-                <p>{{ asignatura.nombre }}</p>
-            </ion-card-content>
-        </ion-card>
-        <!-- Skeleton para asignaturas -->
-        <ion-card *ngIf="skeletonsCargando">
-            <ion-card-header>
-                <ion-card-title class="titulo-centrado">
+            <ion-card-content>
+                <ion-card-title class="ion-margin-bottom">
                     <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
                 </ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-                <p *ngFor="let _ of [1, 2, 3, 4]"> <!--emular las 4 asignaturas-->
-                    <ion-skeleton-text animated style="width: 80%; margin-bottom: 25px;"></ion-skeleton-text>
-                </p>
+                <!-- Skeleton de lista de asignaturas -->
+                <ng-container *ngFor="let asignatura of lista_asignaturas">
+                    <p><ion-skeleton-text animated style="width: 80%;"></ion-skeleton-text></p>
+                </ng-container>
             </ion-card-content>
         </ion-card>
     </div>

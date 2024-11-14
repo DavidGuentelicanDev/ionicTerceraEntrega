@@ -1,0 +1,27 @@
+//backround del card
+.card-background {
+    position: relative; //asegura que el pseudo-elemento se posicione relativo al card
+    overflow: hidden; //oculta cualquier parte del fondo que sobresalga del card
+}
+
+.card-background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/images/registro.svg');
+    background-size: 95%; //ajusta el tamaño de la imagen
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.6; //controla la transparencia de la imagen de fondo
+    z-index: 0; //envia la imagen al fondo
+    pointer-events: none; //evita que el fondo bloquee la interaccion
+}
+
+.card-background ion-card-header,
+.card-background ion-card-content {
+    position: relative;
+    z-index: 1; //eleva el contenido sobre el fondo
+}
