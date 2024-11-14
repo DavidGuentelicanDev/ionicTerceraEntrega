@@ -3,9 +3,10 @@
 <ion-content [fullscreen]="true" class="background-general">
     <div class="ion-padding">
         <!--boton para leer el QR-->
-        <ion-card>
-            <ion-button (click)="leerQRAsistencia()" expand="block" class="ion-padding">Leer QR</ion-button>
-        </ion-card>
+        <ion-button (click)="leerQRAsistencia()" expand="block" color="tertiary" shape="round" class="ion-padding">
+            <ion-icon name="qr-code"></ion-icon>
+            <span class="margen-texto-boton">Marcar Asistencia</span>
+        </ion-button>
         <!--card con asignaturas-->
         <ng-container *ngIf="!skeletonsCargando">
             <ion-card *ngFor="let asignatura of lista_asignaturas" [color]="asignatura.color">

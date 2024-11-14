@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { DbService } from 'src/app/services/db.service';
 import { lastValueFrom } from 'rxjs';
-
 //importar BarcodeScanner
 import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-asistencia',
@@ -34,7 +34,11 @@ export class AsistenciaPage implements OnInit {
   /* CONSTRUCTOR ---------------------------------------------------------------------------------- */
 
   //inyectar dependencias
-  constructor(private api: ApiService, private db: DbService) { }
+  constructor(
+    private api: ApiService,
+    private db: DbService,
+    private alertCtrl: AlertController
+  ) { }
 
 
   /* ngOnInit ------------------------------------------------------------------------------------- */
@@ -65,6 +69,20 @@ export class AsistenciaPage implements OnInit {
       this.correoLogueado = usuario.correo;
       console.log('DGZ CORREO LOGUEADO: ' + this.correoLogueado);
     }
+  }
+
+
+  /* ALERT QR -------------------------------------------------------------------------------------- */
+
+  async alertQR(titulo: string, mensaje: string) {
+    const alert = await this.alertCtrl.create({
+      header: titulo,
+      message: mensaje,
+      backdropDismiss: false,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
 
@@ -126,6 +144,22 @@ export class AsistenciaPage implements OnInit {
 
   /* LECTURA DE QR -------------------------------------------------------------------------------- */
 
+  //enviar asistencia para marcar
+  async marcarAsistencia() {
+    let datos = this.api.marcarAsistenciaQR(this.siglaQR, this.correoLogueado, this.fechaClaseQR);
+    let respuesta = await lastValueFrom(datos);
+    let json_texto = JSON.stringify(respuesta);
+    let json = JSON.parse(json_texto);
+    console.log('DGZ status: ' + json.status);
+
+    if (json.status == 'success') {
+      await this.alertQR('Presente', json.message);
+    } else if (json.status == 'error') {
+      await this.alertQR('Error', json.message);
+    }
+  }
+
+  //leer el qr de asistencia
   async leerQRAsistencia() {
     //setear variables en vacio
     this.siglaQR = '';
@@ -150,6 +184,9 @@ export class AsistenciaPage implements OnInit {
     console.log('DGZ SIGLA: ' + this.siglaQR);
     console.log('DGZ NOMBRE: ' + this.nombreQR);
     console.log('DGZ FECHA: ' + this.fechaClaseQR);
+
+    await this.marcarAsistencia(); //llamar metodo de marcar asistencia
+    await this.obtenerAsignaturasYAsistencia(); //actualizar asistencia
   }
 
 }

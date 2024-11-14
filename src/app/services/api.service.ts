@@ -71,8 +71,14 @@ export class ApiService {
   }
 
   //marcar asistencia
-  marcarAsistenciaQR() {
-    
+  marcarAsistenciaQR(sigla: string, correo: string, fecha: string) {
+    let asistencia: any = {};
+    asistencia.sigla = sigla;
+    asistencia.correo = correo;
+    asistencia.fecha = fecha;
+
+    //api POST
+    return this.http.post(this.URL_DUOC + '/api_duoc/usuario/marcar_asistencia', asistencia).pipe();
   }
 
 }
