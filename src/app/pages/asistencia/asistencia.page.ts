@@ -26,6 +26,9 @@ export class AsistenciaPage implements OnInit {
   spinnerRecarga: boolean = false;
   //para capturar texto de qr
   textoQR: string = '';
+  siglaQR: string = '';
+  nombreQR: string = '';
+  fechaClaseQR: string = '';
 
 
   /* CONSTRUCTOR ---------------------------------------------------------------------------------- */
@@ -124,6 +127,11 @@ export class AsistenciaPage implements OnInit {
   /* LECTURA DE QR -------------------------------------------------------------------------------- */
 
   async leerQRAsistencia() {
+    //setear variables en vacio
+    this.siglaQR = '';
+    this.nombreQR = '';
+    this.fechaClaseQR = '';
+
     let resultado = await BarcodeScanner.scan(); //funcion scan() del barcode
 
     //preguntar si el lector de qr tuvo resultado
@@ -131,6 +139,17 @@ export class AsistenciaPage implements OnInit {
       this.textoQR = resultado.barcodes[0].displayValue; //captura el resultado
       console.log('DGZ QR: ' + this.textoQR);
     }
+
+    let textoSeparado = this.textoQR.split('|');
+    console.log('DGZ QR separado: ' + textoSeparado);
+
+    //extraer y asignar el texto a variables
+    this.siglaQR = textoSeparado[0];
+    this.nombreQR = textoSeparado[1];
+    this.fechaClaseQR = textoSeparado[2];
+    console.log('DGZ SIGLA: ' + this.siglaQR);
+    console.log('DGZ NOMBRE: ' + this.nombreQR);
+    console.log('DGZ FECHA: ' + this.fechaClaseQR);
   }
 
 }

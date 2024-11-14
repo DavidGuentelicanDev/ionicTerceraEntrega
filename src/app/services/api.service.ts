@@ -70,4 +70,9 @@ export class ApiService {
     return this.http.get(this.URL_DUOC + '/api_duoc/usuario/asistencia_obtener?correo=' + this.correoUsuario).pipe();
   }
 
+  //marcar asistencia
+  marcarAsistenciaQR() {
+    
+  }
+
 }
