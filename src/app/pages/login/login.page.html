@@ -12,10 +12,10 @@
     <h4 class="titulo-login">Inicio de sesión</h4>
     <div class="ion-padding">
       <div class="ion-padding">
-        <ion-item class="input" lines="none">
+        <ion-item class="ion-margin-vertical input" lines="none">
           <ion-input [(ngModel)]="mdl_correo" label="Correo electrónico" labelPlacement="floating" placeholder="correo@duocuc.cl"></ion-input>
         </ion-item>
-        <ion-item class="ion-margin-top input" lines="none">
+        <ion-item class="ion-margin-vertical input" lines="none">
           <ion-input [(ngModel)]="mdl_contrasena" label="Contraseña" labelPlacement="floating" [type]="verContrasena ? 'text' : 'password'" placeholder="Ingresa tu contraseña"></ion-input>
           <ion-button fill="clear" slot="end" (click)="contrasenaVisible()">
             <ion-icon [name]="verContrasena ? 'eye' : 'eye-off'" class="ojo-contrasena"></ion-icon>

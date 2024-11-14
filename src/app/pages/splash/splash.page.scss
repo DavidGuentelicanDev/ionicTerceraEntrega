@@ -1,29 +1,38 @@
+//background
+.background-color {
+    --background: radial-gradient(circle, rgb(174, 88, 88) 85%, rgba(27,0,43,1) 100%);
+}
+
+.background-imagen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/images/splash.svg');
+    background-size: 98%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.8; //ajusta la transparencia
+    pointer-events: none; //asegura que el fondo no interfiera con la interaccion
+    z-index: -1; //coloca el fondo detras del contenido
+}
+
+//div contenedor con titulo y logo
 .contenedor {
     display: flex;
     flex-direction: column; //coloca el titulo arriba y el logo abajo
     justify-content: center; //verticalmente
     align-items: center; //centra horizontalmente
     height: 100vh; //ocupa toda la altura de la pantalla
+    position: relative; //asegura que el contenido este por encima del fondo
+    z-index: 1;
 }
 
 .titulo {
     text-align: center; //centrado
     font-size: 3rem; //tamaño grande
     font-weight: bold; //negrita
-    color: #f1f1f1;
+    color: #171717;
     margin-bottom: 20px; //espacio entre el titulo y el logo
-}
-
-.logo-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.logo {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%; //circular
-    border: 3px solid #ddd; //borde
-    object-fit: cover; //la imagen se adapta a su contenedor
 }
