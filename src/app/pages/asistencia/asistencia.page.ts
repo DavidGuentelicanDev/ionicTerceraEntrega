@@ -129,7 +129,7 @@ export class AsistenciaPage implements OnInit {
     //preguntar si el lector de qr tuvo resultado
     if (resultado.barcodes.length > 0) {
       this.textoQR = resultado.barcodes[0].displayValue; //captura el resultado
-      console.log(this.textoQR);
+      console.log('DGZ QR: ' + this.textoQR);
     }
   }
 
