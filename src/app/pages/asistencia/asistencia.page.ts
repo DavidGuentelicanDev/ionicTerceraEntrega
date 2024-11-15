@@ -174,6 +174,8 @@ export class AsistenciaPage implements OnInit {
       console.log('DGZ QR: ' + this.textoQR);
     }
 
+    this.spinnerRecarga = true; //inicia el spinner
+
     let textoSeparado = this.textoQR.split('|'); //funcion split
     console.log('DGZ QR separado: ' + textoSeparado);
 
@@ -185,8 +187,11 @@ export class AsistenciaPage implements OnInit {
     console.log('DGZ NOMBRE: ' + this.nombreQR);
     console.log('DGZ FECHA: ' + this.fechaClaseQR);
 
-    await this.marcarAsistencia(); //llamar metodo de marcar asistencia
-    await this.obtenerAsignaturasYAsistencia(); //actualizar asistencia
+    setTimeout(async () => {
+      await this.marcarAsistencia(); //llamar metodo de marcar asistencia
+      await this.obtenerAsignaturasYAsistencia(); //actualizar asistencia
+      this.spinnerRecarga = false;
+    }, 1000);
   }
 
 }
