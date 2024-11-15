@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { DbService } from 'src/app/services/db.service';
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning'; //importar BarcodeScanner
 import { lastValueFrom } from 'rxjs';
-//importar BarcodeScanner
-import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 import { AlertController } from '@ionic/angular';
 
 @Component({
@@ -54,7 +53,7 @@ export class AsistenciaPage implements OnInit {
 
     BarcodeScanner.installGoogleBarcodeScannerModule(); //instalar esto en el ngOnInit para que funcione
 
-    setTimeout(async () => {
+    setTimeout(() => {
       this.skeletonsCargando = false;
     }, 1500); //mantener skeletons n seg.
   }
@@ -79,7 +78,8 @@ export class AsistenciaPage implements OnInit {
       header: titulo,
       message: mensaje,
       backdropDismiss: false,
-      buttons: ['OK']
+      buttons: ['OK'],
+
     });
 
     await alert.present();
@@ -153,9 +153,9 @@ export class AsistenciaPage implements OnInit {
     console.log('DGZ status: ' + json.status);
 
     if (json.status == 'success') {
-      await this.alertQR('Presente', json.message);
+      await this.alertQR('Presente', json.message + ': ' + this.siglaQR + ' - ' + this.fechaClaseQR);
     } else if (json.status == 'error') {
-      await this.alertQR('Error', json.message);
+      await this.alertQR('Error', json.message + ': ' + this.siglaQR + ' - ' + this.fechaClaseQR);
     }
   }
 
@@ -175,6 +175,7 @@ export class AsistenciaPage implements OnInit {
     }
 
     this.spinnerRecarga = true; //inicia el spinner
+    this.skeletonsCargando = true; //activar nuevamente skeletons
 
     let textoSeparado = this.textoQR.split('|'); //funcion split
     console.log('DGZ QR separado: ' + textoSeparado);
@@ -189,9 +190,13 @@ export class AsistenciaPage implements OnInit {
 
     setTimeout(async () => {
       await this.marcarAsistencia(); //llamar metodo de marcar asistencia
-      await this.obtenerAsignaturasYAsistencia(); //actualizar asistencia
       this.spinnerRecarga = false;
     }, 1000);
+
+    setTimeout(async () => {
+      await this.obtenerAsignaturasYAsistencia(); //actualizar asistencia
+      this.skeletonsCargando = false;
+    }, 2500);
   }
 
 }
