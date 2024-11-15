@@ -146,7 +146,7 @@ export class AsistenciaPage implements OnInit {
 
   //enviar asistencia para marcar
   async marcarAsistencia() {
-    let datos = this.api.marcarAsistenciaQR(this.siglaQR, this.correoLogueado, this.fechaClaseQR);
+    let datos = this.api.marcarAsistencia(this.siglaQR, this.correoLogueado, this.fechaClaseQR);
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
     let json = JSON.parse(json_texto);

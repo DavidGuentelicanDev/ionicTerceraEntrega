@@ -47,12 +47,7 @@ export class DbService {
   }
 
   //guardar el usuario que se loguee en la db
-  async guardarUsuarioLogueado(
-    correo: string,
-    nombre: string,
-    apellido: string,
-    carrera: string
-  ) {
+  async guardarUsuarioLogueado(correo: string, nombre: string, apellido: string, carrera: string) {
     await this.abrirDB();
 
     //insertar datos
