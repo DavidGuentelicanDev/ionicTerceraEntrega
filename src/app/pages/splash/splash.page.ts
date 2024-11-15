@@ -34,12 +34,12 @@ export class SplashPage implements OnInit {
       console.log('DGZ: HAY UN USUARIO LOGUEADO');
       setTimeout(() => {
         this.router.navigate(['principal'], extras);
-      }, 2000);
+      }, 1500);
     } else { //si no hay usuario logueado, navega al login
       console.log('DGZ: NO HAY USUARIO');
       setTimeout(() => {
         this.router.navigate(['login'], extras);
-      }, 2000);
+      }, 1500);
     }
   }
 

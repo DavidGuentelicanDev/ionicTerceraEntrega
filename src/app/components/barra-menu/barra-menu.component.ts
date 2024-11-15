@@ -74,7 +74,9 @@ export class BarraMenuComponent  implements OnInit {
       replaceUrl: true
     }
 
-    this.router.navigate(['principal'], extras);
+    setTimeout(() => {
+      this.router.navigate(['principal'], extras);
+    }, 250);
   }
 
   //navegar a actualizacion de datos
@@ -83,7 +85,9 @@ export class BarraMenuComponent  implements OnInit {
       replaceUrl: true
     }
 
-    this.router.navigate(['actualizacion-datos'], extras);
+    setTimeout(() => {
+      this.router.navigate(['actualizacion-datos'], extras);
+    }, 250);
   }
 
   //navegar a sedes
@@ -92,7 +96,9 @@ export class BarraMenuComponent  implements OnInit {
       replaceUrl: true
     }
 
-    this.router.navigate(['sedes'], extras);
+    setTimeout(() => {
+      this.router.navigate(['sedes'], extras);
+    }, 250);
   }
 
   //navegar a asistencia
@@ -101,7 +107,9 @@ export class BarraMenuComponent  implements OnInit {
       replaceUrl: true
     }
 
-    this.router.navigate(['asistencia'], extras);
+    setTimeout(() => {
+      this.router.navigate(['asistencia'], extras);
+    }, 250);
   }
 
   //metodo para verificar si la ruta actual es la misma

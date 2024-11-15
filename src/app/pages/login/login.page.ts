@@ -68,7 +68,9 @@ export class LoginPage implements OnInit {
   /* NAVEGAR AL REGISTRO --------------------------------------------------------------------------- */
 
   navegarRegistroUsuario() {
-    this.router.navigate(['registro-usuario']);
+    setTimeout(() => {
+      this.router.navigate(['registro-usuario']);
+    }, 250);
     this.mdl_correo = '';
     this.mdl_contrasena = '';
     this.verContrasena = false;
