@@ -9,12 +9,14 @@
                 <ion-card-title>Sedes DUOC UC</ion-card-title>
             </ion-card-header>
             <ion-card-content>
-                <!--mostrar skeletons si está cargando-->
+                <!--mostrar skeletons si esta cargando-->
                 <ion-list *ngIf="skeletonsCargando">
                     <ion-item *ngFor="let sede of lista_sedes" class="item-card">
-                        <ion-thumbnail slot="start" class="thumbnail-card skeleton-image"></ion-thumbnail>
+                        <ion-thumbnail slot="start" class="thumbnail-card skeleton-image">
+                            <ion-skeleton-text animated></ion-skeleton-text>
+                        </ion-thumbnail>
                         <ion-label>
-                            <div class="skeleton-text"></div>
+                            <ion-skeleton-text animated style="width: 70%; height: 16px;"></ion-skeleton-text>
                         </ion-label>
                     </ion-item>
                 </ion-list>
@@ -35,23 +37,21 @@
     <!--modal para informacion de sedes-->
     <ion-modal [isOpen]="modalAbierto" backdropDismiss="false" class="modal">
         <ng-template>
+            <!--toolbar del modal-->
+            <ion-toolbar class="color-toolbar-modal">
+                <ion-title>{{ sedeSeleccionada?.nombre }}</ion-title>
+                <ion-buttons slot="end">
+                    <ion-button color="light" (click)="cerrarModal()">
+                        <ion-icon slot="icon-only" name="close"></ion-icon>
+                    </ion-button>
+                </ion-buttons>
+            </ion-toolbar>
+            <!--centro del modal-->
             <ion-content class="content-modal">
-                <!--toolbar del modal-->
-                <ion-toolbar class="color-toolbar-modal">
-                    <ion-title>{{ sedeSeleccionada?.nombre }}</ion-title>
-                    <ion-buttons slot="end">
-                        <ion-button color="light" (click)="cerrarModal()">
-                            <ion-icon slot="icon-only" name="close"></ion-icon>
-                        </ion-button>
-                    </ion-buttons>
-                </ion-toolbar>
-                <!--contenido movil-->
                 <div class="contenido-scrollable">
-                    <!--imagen del modal-->
                     <div style="text-align: center" class="ion-margin-horizontal ion-margin-top">
                         <ion-img [src]="sedeSeleccionada?.imagen" alt="Imagen de la sede" style="max-width: 100%; height: auto;"></ion-img>
                     </div>
-                    <!--datos de la sede-->
                     <ion-list class="ion-margin-horizontal">
                         <ion-item lines="none" class="item-card">
                             <ion-label>
