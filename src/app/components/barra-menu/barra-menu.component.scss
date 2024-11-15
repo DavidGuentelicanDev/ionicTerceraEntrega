@@ -17,10 +17,37 @@ ion-menu::part(backdrop) {
 
 ion-menu::part(container) {
     border-radius: 20px 0 0 20px;
-    box-shadow: -4px 0px 16px rgba(15, 15, 15, 0.18);
+    box-shadow: -4px 0px 16px rgba(4, 4, 4, 0.18);
 }
 
 //tamaño del icono de las opciones
 .icono {
     font-size: 24px;
+}
+
+//background cuerpo del menu
+.menu-background {
+    position: relative;
+    overflow: hidden;
+}
+
+.menu-background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('/assets/images/menu.svg');
+    background-size: 95%; //ajusta el tamaño de la imagen
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.3; //controla la transparencia de la imagen de fondo
+    z-index: 0; //envia la imagen al fondo
+    pointer-events: none;
+}
+
+.menu-background div {
+    position: relative;
+    z-index: 1;
 }
