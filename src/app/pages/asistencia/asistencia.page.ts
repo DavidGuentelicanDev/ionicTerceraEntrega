@@ -96,12 +96,12 @@ export class AsistenciaPage implements OnInit {
 
   //status de la asignatura
   determinarStatusAsignatura(porcentaje: number): string {
-    return porcentaje >= 70 ? 'Aprobado' : 'Reprobado por Inasistencia';
+    return porcentaje >= 70 ? 'Aprobado por Chayanne' : 'Reprobado por Inasistencia';
   }
 
   //definir color del card segun status
   definirColorStatus(status: string): string {
-    return status === 'Aprobado' ? 'success' : 'danger';
+    return status === 'Aprobado por Chayanne' ? 'success' : 'danger';
   }
 
   //obtener los datos de las asignaturas
