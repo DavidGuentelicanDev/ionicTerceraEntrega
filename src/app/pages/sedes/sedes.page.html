@@ -4,25 +4,25 @@
     <!--contenedor para los cards-->
     <div class="ion-padding">
         <!--card con sedes cuando se carguen-->
-        <ion-card>
+        <ion-card color="dark">
             <ion-card-header>
                 <ion-card-title>Sedes DUOC UC</ion-card-title>
             </ion-card-header>
             <ion-card-content>
                 <!--mostrar skeletons si esta cargando-->
                 <ion-list *ngIf="skeletonsCargando">
-                    <ion-item *ngFor="let sede of lista_sedes" class="item-card">
+                    <ion-item *ngFor="let sede of lista_sedes" class="item-card ion-margin-start">
                         <ion-thumbnail slot="start" class="thumbnail-card skeleton-image">
                             <ion-skeleton-text animated></ion-skeleton-text>
                         </ion-thumbnail>
                         <ion-label>
-                            <ion-skeleton-text animated style="width: 70%; height: 16px;"></ion-skeleton-text>
+                            <ion-skeleton-text animated style="width: 90%; height: 16px;"></ion-skeleton-text>
                         </ion-label>
                     </ion-item>
                 </ion-list>
                 <!--mostrar sedes cuando termine de cargar-->
                 <ion-list *ngIf="!skeletonsCargando">
-                    <ion-item *ngFor="let sede of lista_sedes" (click)="abrirModal(sede)" class="item-card">
+                    <ion-item *ngFor="let sede of lista_sedes" (click)="abrirModal(sede)" class="item-card ion-margin-start">
                         <ion-thumbnail slot="start" class="thumbnail-card">
                             <img alt="Foto de la sede" [src]="sede.imagen" />
                         </ion-thumbnail>

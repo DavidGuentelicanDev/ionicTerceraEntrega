@@ -16,7 +16,6 @@ export class SedesPage implements OnInit {
   //lista para las sedes
   lista_sedes: any[] = [];
   //skeletons
-  skeletons = Array(11);
   skeletonsCargando: boolean = true;
   //modal con detalle por sede
   modalAbierto: boolean = false;
@@ -51,7 +50,7 @@ export class SedesPage implements OnInit {
 
     setTimeout(async () => {
       this.skeletonsCargando = false;
-    }, 3000); //mantener skeletons n seg.
+    }, 4000); //mantener skeletons n seg.
   }
 
 
