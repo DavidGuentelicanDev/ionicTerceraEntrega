@@ -147,7 +147,7 @@ export class ActualizacionDatosPage implements OnInit {
           this.verConfirmarContrasena = false;
         } else {
           this.mostrarToast(json.message, 'success', 1500);
-          this.mostrarLoading('Volviendo a la pantalla Principal', 5000);
+          this.mostrarLoading('Volviendo a la pantalla Principal', 1500);
 
           //redirigir al principal
           let extras: NavigationExtras = {

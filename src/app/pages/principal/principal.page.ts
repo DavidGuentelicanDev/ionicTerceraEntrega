@@ -21,8 +21,6 @@ export class PrincipalPage implements OnInit {
   nombre: string = '';
   apellido: string = '';
   carrera: string = '';
-  //spinner de recarga
-  spinnerRecarga: boolean = false;
   //lista para asignaturas
   lista_asignaturas: any[] = [];
 
@@ -95,8 +93,6 @@ export class PrincipalPage implements OnInit {
 
   //metodo del logout
   async logout() {
-    this.spinnerRecarga = true;
-
     //primero borrar el usuario logueado
     await this.eliminarUsuarioLogueado(this.correo);
 
@@ -107,7 +103,6 @@ export class PrincipalPage implements OnInit {
     this.mostrarToast('Cerrando sesión', 'tertiary', 1500);
 
     setTimeout(() => {
-      this.spinnerRecarga = false;
       this.router.navigate(['login'], extras);
     }, 2000);
   }

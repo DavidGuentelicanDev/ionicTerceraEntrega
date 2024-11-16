@@ -16,8 +16,6 @@ export class BarraMenuComponent  implements OnInit {
   @Input() titulo: string = '';
   //variable para controlar la visibilidad de los botones segun la pantalla donde este
   rutaActual: string = '';
-  //spinner de recarga
-  spinnerRecarga: boolean = false;
   //para obtener el correo logueado
   correoLogueado: string = '';
 
@@ -134,8 +132,6 @@ export class BarraMenuComponent  implements OnInit {
 
   //metodo del logout
   async logout() {
-    this.spinnerRecarga = true;
-
     //primero borrar el usuario logueado
     await this.eliminarUsuarioLogueado(this.correoLogueado);
 
@@ -146,7 +142,6 @@ export class BarraMenuComponent  implements OnInit {
     this.mostrarToast('Cerrando sesión', 'tertiary', 1500);
 
     setTimeout(() => {
-      this.spinnerRecarga = false;
       this.router.navigate(['login'], extras);
     }, 2000);
   }

@@ -21,8 +21,6 @@ export class LoginPage implements OnInit {
   spinnerVisible: boolean = false;
   //boton de inicio deshabilitado
   botonDeshabilitado: boolean = false;
-  //spinner de recarga
-  spinnerRecarga: boolean = false;
   //variables para guardar usuario
   db_correo: string = '';
   db_nombre: string = '';
@@ -112,11 +110,9 @@ export class LoginPage implements OnInit {
         }
 
         this.mostrarToast('Bienvenid@ ' + this.db_nombre + ' ' + this.db_apellido , 'success', 3000);
-        this.spinnerRecarga = true; //carga un spinner que ocupa toda la pantalla mientras navega al principal
 
         setTimeout(() => {
           this.router.navigate(['principal'], extras);
-          this.spinnerRecarga = false;
         }, 2000);
       }
 
