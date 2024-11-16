@@ -28,6 +28,8 @@ export class LoginPage implements OnInit {
   db_carrera: string = '';
   //contraseña visible
   verContrasena: boolean = false;
+  //barra de progreso para simular una carga
+  barraProgresoVisible: boolean = false;
 
 
   /* CONSTRUCTOR ------------------------------------------------------------------------------------- */
@@ -77,9 +79,11 @@ export class LoginPage implements OnInit {
 
   /* LOGIN ---------------------------------------------------------------------------------------- */
 
+  //logueo
   async login() {
     this.spinnerVisible = true;
     this.botonDeshabilitado = true;
+    this.barraProgresoVisible = true;
 
     let datos = this.api.login(this.mdl_correo, this.mdl_contrasena);
     let respuesta = await lastValueFrom(datos);
@@ -111,7 +115,8 @@ export class LoginPage implements OnInit {
 
         this.mostrarToast('Bienvenid@ ' + this.db_nombre + ' ' + this.db_apellido , 'success', 3000);
 
-        setTimeout(() => {
+        setTimeout(async () => {
+          this.barraProgresoVisible = false;
           this.router.navigate(['principal'], extras);
         }, 2000);
       }

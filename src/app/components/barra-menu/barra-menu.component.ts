@@ -18,6 +18,8 @@ export class BarraMenuComponent  implements OnInit {
   rutaActual: string = '';
   //para obtener el correo logueado
   correoLogueado: string = '';
+  //barra de progreso para simular una carga
+  barraProgresoVisible: boolean = false;
 
 
   /* CONSTRUCTOR -----------------------------------------------------------------------------------*/
@@ -55,7 +57,8 @@ export class BarraMenuComponent  implements OnInit {
       mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
-    toast.present();
+
+    await toast.present();
   }
 
 
@@ -78,10 +81,12 @@ export class BarraMenuComponent  implements OnInit {
   }
 
   //navegar a actualizacion de datos
-  actualizacionDatos() {
+  async actualizacionDatos() {
     let extras: NavigationExtras = {
       replaceUrl: true
     }
+
+    await this.menuCtrl.close('menu-end');
 
     setTimeout(() => {
       this.router.navigate(['actualizacion-datos'], extras);
@@ -89,10 +94,12 @@ export class BarraMenuComponent  implements OnInit {
   }
 
   //navegar a sedes
-  sedes() {
+  async sedes() {
     let extras: NavigationExtras = {
       replaceUrl: true
     }
+
+    await this.menuCtrl.close('menu-end');
 
     setTimeout(() => {
       this.router.navigate(['sedes'], extras);
@@ -100,10 +107,12 @@ export class BarraMenuComponent  implements OnInit {
   }
 
   //navegar a asistencia
-  asistencia() {
+  async asistencia() {
     let extras: NavigationExtras = {
       replaceUrl: true
     }
+
+    await this.menuCtrl.close('menu-end');
 
     setTimeout(() => {
       this.router.navigate(['asistencia'], extras);
@@ -132,6 +141,8 @@ export class BarraMenuComponent  implements OnInit {
 
   //metodo del logout
   async logout() {
+    this.barraProgresoVisible = true;
+
     //primero borrar el usuario logueado
     await this.eliminarUsuarioLogueado(this.correoLogueado);
 
@@ -142,6 +153,7 @@ export class BarraMenuComponent  implements OnInit {
     this.mostrarToast('Cerrando sesión', 'tertiary', 1500);
 
     setTimeout(() => {
+      this.barraProgresoVisible = false;
       this.router.navigate(['login'], extras);
     }, 2000);
   }
@@ -155,14 +167,16 @@ export class BarraMenuComponent  implements OnInit {
         {
           text: 'Cancelar',
           role: 'cancel',
-          handler: () => {
+          handler: async () => {
+            await this.menuCtrl.close('menu-end');
             console.log('DGZ: Cierre de sesión cancelado');
           }
         },
         {
           text: 'Cerrar',
-          handler: () => {
-            this.logout();
+          handler: async () => {
+            await this.menuCtrl.close('menu-end');
+            await this.logout();
           }
         }
       ]

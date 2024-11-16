@@ -1,6 +1,7 @@
 <app-barra-menu titulo="ECD Asistencia"></app-barra-menu>
 
 <ion-content [fullscreen]="true" class="background-general">
+    <ion-progress-bar *ngIf="barraProgresoVisible" type="indeterminate" class="progreso-barra"></ion-progress-bar>
     <!--contenedor para los cards-->
     <div class="ion-padding">
         <!--card con datos de usuario-->

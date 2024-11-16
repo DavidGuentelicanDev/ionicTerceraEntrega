@@ -23,6 +23,8 @@ export class PrincipalPage implements OnInit {
   carrera: string = '';
   //lista para asignaturas
   lista_asignaturas: any[] = [];
+  //barra de progreso para simular una carga
+  barraProgresoVisible: boolean = false;
 
 
   /* CONSTRUCTOR --------------------------------------------------------------------------------- */
@@ -53,7 +55,7 @@ export class PrincipalPage implements OnInit {
     this.api.correoUsuario = this.correo; //asignar que el correo de usuario logueado sea el correo de la ruta de la api
     await this.obtenerAsignaturas(); //obtener los datos de las asignaturas del usuario logueado
 
-    setTimeout(async () => {
+    setTimeout(() => {
       this.skeletonsCargando = false;
     }, 1000); //mantener skeletons n seg.
   }
@@ -70,7 +72,8 @@ export class PrincipalPage implements OnInit {
       mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
-    toast.present();
+
+    await toast.present();
   }
 
 
@@ -93,6 +96,8 @@ export class PrincipalPage implements OnInit {
 
   //metodo del logout
   async logout() {
+    this.barraProgresoVisible = true;
+
     //primero borrar el usuario logueado
     await this.eliminarUsuarioLogueado(this.correo);
 
@@ -103,6 +108,7 @@ export class PrincipalPage implements OnInit {
     this.mostrarToast('Cerrando sesión', 'tertiary', 1500);
 
     setTimeout(() => {
+      this.barraProgresoVisible = false;
       this.router.navigate(['login'], extras);
     }, 2000);
   }
@@ -112,18 +118,15 @@ export class PrincipalPage implements OnInit {
     let alert = await this.alertCtrl.create({
       header: 'Reiniciar aplicación',
       message: 'Para aplicar el cambio de contraseña, es necesario reiniciar la aplicación',
-      backdropDismiss: false, //evita que el alert se cierre al presionar fuera
-      buttons: [
-        {
-          text: 'Cerrar sesión',
-          handler: () => {
-            this.logout();
-          }
-        }
-      ]
     });
 
     await alert.present();
+
+    //se cierra automaticamente a los n seg.
+    setTimeout(async () => {
+      await alert.dismiss();
+      this.logout();
+    }, 1500);
   }
 
   //funcion para borrar usuario logueado
