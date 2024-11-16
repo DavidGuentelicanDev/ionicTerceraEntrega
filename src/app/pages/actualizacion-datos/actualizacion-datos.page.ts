@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { DbService } from 'src/app/services/db.service';
@@ -21,8 +21,6 @@ export class ActualizacionDatosPage implements OnInit {
   mdl_carrera: string = '';
   //correo logueado
   correoLogueado: string = '';
-  //spinner de recarga
-  spinnerRecarga: boolean = false;
   //spinner boton
   spinnerVisible: boolean = false;
   //boton de registro deshabilitado
@@ -39,7 +37,8 @@ export class ActualizacionDatosPage implements OnInit {
     private router: Router,
     private api: ApiService,
     private toastCtrl: ToastController,
-    private db: DbService
+    private db: DbService,
+    private loadingCtrl: LoadingController
   ) { }
 
 
@@ -50,10 +49,11 @@ export class ActualizacionDatosPage implements OnInit {
   }
 
 
-  /* TOAST ------------------------------------------------------------------------------------------ */
+  /* TOAST Y LOADING -------------------------------------------------------------------------------- */
 
+  //toast
   async mostrarToast(mensaje: string, color: string, duracion: number) {
-    let toast = await this.toastCtrl.create({
+    const toast = await this.toastCtrl.create({
       message: mensaje,
       color: color,
       duration: duracion,
@@ -62,6 +62,19 @@ export class ActualizacionDatosPage implements OnInit {
       cssClass: 'toast' //clase del global.scss
     });
     toast.present();
+  }
+
+  //loading
+  async mostrarLoading(mensaje: string, duracion: number) {
+    const loading = await this.loadingCtrl.create({
+      message: mensaje,
+      duration: duracion,
+      spinner: 'circles',
+      mode: 'md',
+      cssClass: 'loading'
+    });
+
+    loading.present();
   }
 
 
@@ -107,16 +120,11 @@ export class ActualizacionDatosPage implements OnInit {
         this.verContrasena = false;
         this.verConfirmarContrasena = false;
       } else if (this.mdl_contrasenaNueva == this.mdl_confirmarContrasenaNueva) { //nueva contraseña y confirmar nueva contraseña iguales
-        let datos = this.api.actualizarUsuario(
-          this.mdl_correo,
-          this.mdl_contrasenaNueva,
-          this.mdl_carrera
-        );
+        let datos = this.api.actualizarUsuario(this.mdl_correo, this.mdl_contrasenaNueva, this.mdl_carrera);
         let respuesta = await lastValueFrom(datos);
         let json_texto = JSON.stringify(respuesta);
         let json = JSON.parse(json_texto);
-        console.log('DGZ: ' + json.status);
-        console.log('DGZ: ' + json.message);
+        console.log('DGZ: ' + json.status + json.message);
 
         //se capturan los mensajes de la api segun la respuesta
         if (json.status == 'error') {
@@ -139,7 +147,7 @@ export class ActualizacionDatosPage implements OnInit {
           this.verConfirmarContrasena = false;
         } else {
           this.mostrarToast(json.message, 'success', 1500);
-          this.spinnerRecarga = true;
+          this.mostrarLoading('Volviendo a la pantalla Principal', 5000);
 
           //redirigir al principal
           let extras: NavigationExtras = {
@@ -151,7 +159,6 @@ export class ActualizacionDatosPage implements OnInit {
 
           setTimeout(() => {
             this.router.navigate(['principal'], extras);
-            this.spinnerRecarga = false;
           }, 2000);
         }
 

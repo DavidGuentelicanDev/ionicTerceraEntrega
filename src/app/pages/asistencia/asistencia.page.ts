@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { DbService } from 'src/app/services/db.service';
 import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning'; //importar BarcodeScanner
 import { lastValueFrom } from 'rxjs';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-asistencia',
@@ -21,8 +21,6 @@ export class AsistenciaPage implements OnInit {
   TOTAL_CLASES: number = 5;
   //skeletons
   skeletonsCargando: boolean = true;
-  //spinner de recarga
-  spinnerRecarga: boolean = false;
   //para capturar texto de qr
   textoQR: string = '';
   siglaQR: string = '';
@@ -36,7 +34,8 @@ export class AsistenciaPage implements OnInit {
   constructor(
     private api: ApiService,
     private db: DbService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController
   ) { }
 
 
@@ -71,18 +70,21 @@ export class AsistenciaPage implements OnInit {
   }
 
 
-  /* ALERT QR -------------------------------------------------------------------------------------- */
+  /* ALERT ----------------------------------------------------------------------------------------- */
 
   async alertQR(titulo: string, mensaje: string) {
     const alert = await this.alertCtrl.create({
       header: titulo,
       message: mensaje,
-      backdropDismiss: false,
-      buttons: ['OK'],
-
+      backdropDismiss: true
     });
 
     await alert.present();
+
+    //el alert se desaparece a los n seg. si el usuario no presiona fuera
+    setTimeout(async () => {
+      await alert.dismiss();
+    }, 1500);
   }
 
 
@@ -166,37 +168,51 @@ export class AsistenciaPage implements OnInit {
     this.nombreQR = '';
     this.fechaClaseQR = '';
 
-    let resultado = await BarcodeScanner.scan(); //funcion scan() del barcode
+    //crear loading
+    const loading = await this.loadingCtrl.create({
+      message: 'Leyendo el código QR...',
+      spinner: 'circles',
+      mode: 'md',
+      cssClass: 'loading'
+    });
 
-    //preguntar si el lector de qr tuvo resultado
-    if (resultado.barcodes.length > 0) {
-      this.textoQR = resultado.barcodes[0].displayValue; //captura el resultado
-      console.log('DGZ QR: ' + this.textoQR);
+    try {
+      let resultado = await BarcodeScanner.scan(); //leer qr
+      await loading.present(); //llamar al loading
+
+      setTimeout(async () => {
+        //preguntar si el lector de qr tuvo resultado
+        if (resultado.barcodes.length > 0) {
+          this.textoQR = resultado.barcodes[0].displayValue; //captura el resultado
+          console.log('DGZ QR: ' + this.textoQR);
+
+          //procesar y separar el texto obtenido del qr
+          let textoSeparado = this.textoQR.split('|'); //funcion split
+          console.log('DGZ QR separado: ' + textoSeparado);
+
+          //extraer del split y asignar el texto a variables
+          this.siglaQR = textoSeparado[0];
+          this.nombreQR = textoSeparado[1];
+          this.fechaClaseQR = textoSeparado[2];
+          console.log('DGZ SIGLA: ' + this.siglaQR);
+          console.log('DGZ NOMBRE: ' + this.nombreQR);
+          console.log('DGZ FECHA: ' + this.fechaClaseQR);
+        }
+
+        this.skeletonsCargando = true; //skeletons activados
+        await loading.dismiss(); //cerrar loading luego de finalizar el proceso
+        await this.marcarAsistencia(); //llamar metodo de marcar asistencia
+        await this.obtenerAsignaturasYAsistencia(); //actualizar asistencia
+
+        //sekeletons desactivados luego de n seg.
+        setTimeout(() => {
+          this.skeletonsCargando = false;
+        }, 2000);
+      }, 1000);
+    } catch (e) {
+      console.log('DGZ ERROR-QR: ' + JSON.stringify(e));
+      await this.alertQR('Error', 'Ocurrió un error al procesar el código QR');
     }
-
-    this.spinnerRecarga = true; //inicia el spinner
-    this.skeletonsCargando = true; //activar nuevamente skeletons
-
-    let textoSeparado = this.textoQR.split('|'); //funcion split
-    console.log('DGZ QR separado: ' + textoSeparado);
-
-    //extraer del split y asignar el texto a variables
-    this.siglaQR = textoSeparado[0];
-    this.nombreQR = textoSeparado[1];
-    this.fechaClaseQR = textoSeparado[2];
-    console.log('DGZ SIGLA: ' + this.siglaQR);
-    console.log('DGZ NOMBRE: ' + this.nombreQR);
-    console.log('DGZ FECHA: ' + this.fechaClaseQR);
-
-    setTimeout(async () => {
-      await this.marcarAsistencia(); //llamar metodo de marcar asistencia
-      this.spinnerRecarga = false;
-    }, 1000);
-
-    setTimeout(async () => {
-      await this.obtenerAsignaturasYAsistencia(); //actualizar asistencia
-      this.skeletonsCargando = false;
-    }, 2500);
   }
 
 }

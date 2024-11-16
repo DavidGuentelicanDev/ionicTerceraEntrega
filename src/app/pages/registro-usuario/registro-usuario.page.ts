@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -24,8 +24,6 @@ export class RegistroUsuarioPage implements OnInit {
   spinnerVisible: boolean = false;
   //boton de registro deshabilitado
   botonDeshabilitado: boolean = false;
-  //spinner de recarga
-  spinnerRecarga: boolean = false;
   //contraseña visible
   verContrasena: boolean = false;
   verConfirmarContrasena: boolean = false;
@@ -37,7 +35,8 @@ export class RegistroUsuarioPage implements OnInit {
   constructor(
     private router: Router,
     private api: ApiService,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private loadingCtrl: LoadingController
   ) { }
 
 
@@ -47,10 +46,11 @@ export class RegistroUsuarioPage implements OnInit {
   }
 
 
-  /* TOAST ----------------------------------------------------------------------------------------- */
+  /* TOAST Y LOADING ------------------------------------------------------------------------------- */
 
+  //toast
   async mostrarToast(mensaje: string, color: string, duracion: number) {
-    let toast = await this.toastCtrl.create({
+    const toast = await this.toastCtrl.create({
       message: mensaje,
       color: color,
       duration: duracion,
@@ -58,7 +58,21 @@ export class RegistroUsuarioPage implements OnInit {
       mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
+
     toast.present();
+  }
+
+  //loading
+  async mostrarLoading(mensaje: string, duracion: number) {
+    const loading = await this.loadingCtrl.create({
+      message: mensaje,
+      duration: duracion,
+      spinner: 'circles',
+      mode: 'md',
+      cssClass: 'loading'
+    });
+
+    loading.present();
   }
 
 
@@ -128,8 +142,7 @@ export class RegistroUsuarioPage implements OnInit {
         let respuesta = await lastValueFrom(datos);
         let json_texto = JSON.stringify(respuesta);
         let json = JSON.parse(json_texto);
-        console.log('DGZ: ' + json.status);
-        console.log('DGZ: ' + json.message);
+        console.log('DGZ: ' + json.status + json.message);
 
         if (json.status == 'error') { //errores de la api
           this.mostrarToast(json.message, 'warning', 3000); //mensaje parametrizado en la respuesta de la api
@@ -141,11 +154,10 @@ export class RegistroUsuarioPage implements OnInit {
           this.verConfirmarContrasena = false;
         } else if (json.status == 'success') { //validacion correcta
           this.mostrarToast(json.message, 'success', 1500); //mensaje parametrizado en la respuesta de la api
-          this.spinnerRecarga = true;
+          this.mostrarLoading('Volviendo al Inicio de Sesión', 2000); //mostrar loading
 
           setTimeout(() => {
             this.router.navigate(['login'], extras);
-            this.spinnerRecarga = false;
           }, 2000);
         }
       }
