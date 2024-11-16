@@ -155,7 +155,7 @@ export class AsistenciaPage implements OnInit {
     if (json.status == 'success') {
       await this.alertQR('Presente', json.message + ': ' + this.siglaQR + ' - ' + this.fechaClaseQR);
     } else if (json.status == 'error') {
-      await this.alertQR('Error', json.message + ': ' + this.siglaQR + ' - ' + this.fechaClaseQR);
+      await this.alertQR('Error', json.message);
     }
   }
 
