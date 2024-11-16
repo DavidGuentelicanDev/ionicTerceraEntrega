@@ -6,26 +6,20 @@
   </ion-header>
   <ion-content class="menu-background">
     <div class="ion-margin-top">
-      <ion-item *ngIf="!esLaRutaActual('principal')" lines="none">
-        <ion-button (click)="principal()" fill="clear" color="dark">
-          <ion-icon name="home" slot="start" class="icono"></ion-icon>
-          Principal
-        </ion-button>
-      </ion-item>
-      <ion-item *ngIf="!esLaRutaActual('actualizacion-datos')" lines="none">
-        <ion-button (click)="actualizacionDatos()" fill="clear" color="dark">
+      <ion-item lines="none">
+        <ion-button (click)="actualizacionDatos()" fill="clear" color="dark" [disabled]="esLaRutaActual('actualizacion-datos')">
           <ion-icon name="person-circle-outline" slot="start" class="icono"></ion-icon>
           Actualizar datos
         </ion-button>
       </ion-item>
-      <ion-item *ngIf="!esLaRutaActual('sedes')" lines="none">
-        <ion-button (click)="sedes()" fill="clear" color="dark">
+      <ion-item lines="none">
+        <ion-button (click)="sedes()" fill="clear" color="dark" [disabled]="esLaRutaActual('sedes')">
           <ion-icon name="business" slot="start" class="icono"></ion-icon>
           Sedes
         </ion-button>
       </ion-item>
-      <ion-item *ngIf="!esLaRutaActual('asistencia')" lines="none">
-        <ion-button (click)="asistencia()" fill="clear" color="dark">
+      <ion-item lines="none">
+        <ion-button (click)="asistencia()" fill="clear" color="dark" [disabled]="esLaRutaActual('asistencia')">
           <ion-icon name="calendar-outline" slot="start" class="icono"></ion-icon>
           Asistencia
         </ion-button>
@@ -45,6 +39,9 @@
   <ion-toolbar class="barra-general">
     <ion-title>{{ titulo }}</ion-title>
     <ion-buttons slot="end">
+      <ion-button (click)="principal()" [disabled]="esLaRutaActual('principal')">
+        <ion-icon slot="icon-only" name="home"></ion-icon>
+      </ion-button>
       <ion-button (click)="abrirMenu()">
         <ion-icon slot="icon-only" name="menu"></ion-icon>
       </ion-button>
