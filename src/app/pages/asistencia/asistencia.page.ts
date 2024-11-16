@@ -211,7 +211,6 @@ export class AsistenciaPage implements OnInit {
       }, 1000);
     } catch (e) {
       console.log('DGZ ERROR-QR: ' + JSON.stringify(e));
-      await this.alertQR('Error', 'Ocurrió un error al procesar el código QR');
     }
   }
 
