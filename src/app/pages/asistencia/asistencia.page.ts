@@ -3,7 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { DbService } from 'src/app/services/db.service';
 import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning'; //importar BarcodeScanner
 import { lastValueFrom } from 'rxjs';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, RefresherEventDetail } from '@ionic/angular';
 
 @Component({
   selector: 'app-asistencia',
@@ -54,7 +54,7 @@ export class AsistenciaPage implements OnInit {
 
     setTimeout(() => {
       this.skeletonsCargando = false;
-    }, 1500); //mantener skeletons n seg.
+    }, 1000); //mantener skeletons n seg.
   }
 
 
@@ -85,6 +85,22 @@ export class AsistenciaPage implements OnInit {
     setTimeout(async () => {
       await alert.dismiss();
     }, 1500);
+  }
+
+
+  /* REFRESHER -------------------------------------------------------------------------------------- */
+
+  handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+    setTimeout(() => {
+      //elementos que se van a recargar
+      this.skeletonsCargando = true;
+      this.obtenerAsignaturasYAsistencia();
+      setTimeout(() => {
+        this.skeletonsCargando = false;
+      }, 1000);
+
+      (event.target as HTMLIonRefresherElement).complete(); //refresher completo
+    }, 1000);
   }
 
 

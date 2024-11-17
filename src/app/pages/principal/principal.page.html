@@ -2,6 +2,10 @@
 
 <ion-content [fullscreen]="true" class="background-general">
     <ion-progress-bar *ngIf="barraProgresoVisible" type="indeterminate" class="progreso-barra"></ion-progress-bar>
+    <!--refresher-->
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <!--contenedor para los cards-->
     <div class="ion-padding">
         <!--card con datos de usuario-->

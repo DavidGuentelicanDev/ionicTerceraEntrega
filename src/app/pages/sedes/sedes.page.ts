@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { RefresherEventDetail, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { DbService } from 'src/app/services/db.service';
@@ -50,7 +50,7 @@ export class SedesPage implements OnInit {
 
     setTimeout(async () => {
       this.skeletonsCargando = false;
-    }, 4000); //mantener skeletons n seg.
+    }, 3000); //mantener skeletons n seg.
   }
 
 
@@ -66,6 +66,22 @@ export class SedesPage implements OnInit {
       cssClass: 'toast' //clase del global.scss
     });
     toast.present();
+  }
+
+
+  /* REFRESHER -------------------------------------------------------------------------------------- */
+
+  handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+    setTimeout(() => {
+      //elementos que se van a recargar
+      this.skeletonsCargando = true;
+      this.mostrarSedes();
+      setTimeout(async () => {
+        this.skeletonsCargando = false;
+      }, 3000);
+
+      (event.target as HTMLIonRefresherElement).complete(); //refresher completo
+    }, 1000);
   }
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { AlertController, ToastController } from '@ionic/angular';
+import { AlertController, RefresherEventDetail, ToastController } from '@ionic/angular';
 import { lastValueFrom } from 'rxjs';
 import { ApiService } from 'src/app/services/api.service';
 import { DbService } from 'src/app/services/db.service';
@@ -74,6 +74,24 @@ export class PrincipalPage implements OnInit {
     });
 
     await toast.present();
+  }
+
+
+  /* REFRESHER -------------------------------------------------------------------------------------- */
+
+  handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+    setTimeout(() => {
+      //elementos que se van a recargar
+      this.skeletonsCargando = true;
+      this.mostrarUsuarioLogueado();
+      this.api.correoUsuario = this.correo;
+      this.obtenerAsignaturas();
+      setTimeout(() => {
+        this.skeletonsCargando = false;
+      }, 1000);
+
+      (event.target as HTMLIonRefresherElement).complete(); //refresher completo
+    }, 1000);
   }
 
 

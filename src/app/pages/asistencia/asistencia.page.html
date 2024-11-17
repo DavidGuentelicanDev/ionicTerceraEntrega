@@ -1,6 +1,10 @@
 <app-barra-menu titulo="Registro de Asistencia"></app-barra-menu>
 
 <ion-content [fullscreen]="true" class="background-general">
+    <!--refresher-->
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <!--card con asignaturas-->
     <ion-card color="dark">
         <ng-container *ngIf="!skeletonsCargando">
