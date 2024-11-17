@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
+import { App } from '@capacitor/app';
+import { IonRouterOutlet, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,25 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+
+  /* CONSTRUCTOR ------------------------------------------------------------------------------------ */
+
+  //-ionbackbutton: https://ionicframework.com/docs/developing/hardware-back-button#exiting-the-app
+  constructor(private plataforma: Platform, @Optional() private routerOutlet: IonRouterOutlet) {
+    this.inicializarControladorBackButton(); //llama al metodo para el backbutton
+  }
+
+
+  /* IONBACKBUTTON ---------------------------------------------------------------------------------- */
+
+  inicializarControladorBackButton() {
+    this.plataforma.backButton.subscribeWithPriority(10, () => {
+      if (this.routerOutlet && this.routerOutlet.canGoBack()) {
+        this.routerOutlet.pop(); //retrocede si se puede
+      } else {
+        App.minimizeApp(); //si no puede retroceder, minimiza la app
+      }
+    });
+  }
+
 }
