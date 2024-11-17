@@ -14,10 +14,9 @@
           <ion-input [(ngModel)]="mdl_correo" label="Correo electrónico" labelPlacement="floating" placeholder="correo@duocuc.cl"></ion-input>
         </ion-item>
         <ion-item class="ion-margin-vertical input" lines="none">
-          <ion-input [(ngModel)]="mdl_contrasena" label="Contraseña" labelPlacement="floating" [type]="verContrasena ? 'text' : 'password'" placeholder="Ingresa tu contraseña"></ion-input>
-          <ion-button fill="clear" slot="end" (click)="contrasenaVisible()">
-            <ion-icon [name]="verContrasena ? 'eye' : 'eye-off'" class="ojo-contrasena"></ion-icon>
-          </ion-button>
+          <ion-input [(ngModel)]="mdl_contrasena" label="Contraseña" labelPlacement="stacked" type="password" placeholder="Ingresa tu contraseña">
+            <ion-input-password-toggle slot="end" color="dark"></ion-input-password-toggle>
+          </ion-input>
         </ion-item>
         <ion-button (click)="login()" [disabled]="botonDeshabilitado" expand="block" shape="round" color="tertiary" class="ion-margin-top">
           <ion-spinner *ngIf="spinnerVisible" name="bubbles"></ion-spinner>

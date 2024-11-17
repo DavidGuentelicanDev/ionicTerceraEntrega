@@ -25,9 +25,6 @@ export class ActualizacionDatosPage implements OnInit {
   spinnerVisible: boolean = false;
   //boton de registro deshabilitado
   botonDeshabilitado: boolean = false;
-  //contraseña visible
-  verContrasena: boolean = false;
-  verConfirmarContrasena: boolean = false;
 
 
   /* CONSTRUCTOR ------------------------------------------------------------------------------------- */
@@ -61,7 +58,8 @@ export class ActualizacionDatosPage implements OnInit {
       mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
-    toast.present();
+
+    await toast.present();
   }
 
   //loading
@@ -74,7 +72,7 @@ export class ActualizacionDatosPage implements OnInit {
       cssClass: 'loading'
     });
 
-    loading.present();
+    await loading.present();
   }
 
 
@@ -101,24 +99,18 @@ export class ActualizacionDatosPage implements OnInit {
         this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
-        this.verContrasena = false;
-        this.verConfirmarContrasena = false;
       } else if (this.mdl_contrasenaNueva.length < 3) { //validar largo de contraseña con min 3 caracteres, mensaje plano
         this.mostrarToast('La nueva contraseña debe tener un largo mínimo de 3 caracteres', 'warning', 3000);
         this.mdl_contrasenaNueva = '';
         this.mdl_confirmarContrasenaNueva = '';
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
-        this.verContrasena = false;
-        this.verConfirmarContrasena = false;
       } else if (this.mdl_contrasenaNueva != this.mdl_confirmarContrasenaNueva) { //nueva contraseña y confirmar nueva contraseña distintas, mensaje plano
         this.mostrarToast('Las contraseñas no coinciden', 'warning', 3000);
         this.mdl_contrasenaNueva = '';
         this.mdl_confirmarContrasenaNueva = '';
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
-        this.verContrasena = false;
-        this.verConfirmarContrasena = false;
       } else if (this.mdl_contrasenaNueva == this.mdl_confirmarContrasenaNueva) { //nueva contraseña y confirmar nueva contraseña iguales
         let datos = this.api.actualizarUsuario(this.mdl_correo, this.mdl_contrasenaNueva, this.mdl_carrera);
         let respuesta = await lastValueFrom(datos);
@@ -134,8 +126,6 @@ export class ActualizacionDatosPage implements OnInit {
           this.mdl_contrasenaNueva = '';
           this.mdl_carrera = '';
           this.mdl_confirmarContrasenaNueva = '';
-          this.verContrasena = false;
-          this.verConfirmarContrasena = false;
         } else if (this.mdl_correo != this.correoLogueado) { //correo no corresponde al usuario logueado
           this.mostrarToast('El correo ingresado no corresponde al usuario logueado', 'warning', 3000);
           this.mdl_correo = '';
@@ -143,8 +133,6 @@ export class ActualizacionDatosPage implements OnInit {
           this.mdl_confirmarContrasenaNueva = '';
           this.spinnerVisible = false;
           this.botonDeshabilitado = false;
-          this.verContrasena = false;
-          this.verConfirmarContrasena = false;
         } else {
           this.mostrarToast(json.message, 'success', 1500);
           this.mostrarLoading('Volviendo a la pantalla Principal', 1500);
@@ -165,19 +153,6 @@ export class ActualizacionDatosPage implements OnInit {
         this.spinnerVisible = false;
       }
     }, 1000);
-  }
-
-
-  /* OJO CONTRASEÑA -------------------------------------------------------------------------------- */
-
-  //contraseña visible
-  contrasenaVisible() {
-    this.verContrasena = !this.verContrasena; //alterna la visibilidad de la contraseña
-  }
-
-  //confirmar contraseña visible
-  confirmarContrasenaVisible() {
-    this.verConfirmarContrasena = !this.verConfirmarContrasena; //alterna la visibilidad de la contraseña
   }
 
 }

@@ -26,8 +26,6 @@ export class LoginPage implements OnInit {
   db_nombre: string = '';
   db_apellido: string = '';
   db_carrera: string = '';
-  //contraseña visible
-  verContrasena: boolean = false;
   //barra de progreso para simular una carga
   barraProgresoVisible: boolean = false;
 
@@ -61,7 +59,7 @@ export class LoginPage implements OnInit {
       cssClass: 'toast' //clase del global.scss
     });
 
-    toast.present();
+    await toast.present();
   }
 
 
@@ -73,7 +71,6 @@ export class LoginPage implements OnInit {
     }, 250);
     this.mdl_correo = '';
     this.mdl_contrasena = '';
-    this.verContrasena = false;
   }
 
 
@@ -97,7 +94,6 @@ export class LoginPage implements OnInit {
         this.mostrarToast(json.message, 'warning', 3000); //mensaje parametrizado en la api
         this.mdl_correo = '';
         this.mdl_contrasena = '';
-        this.verContrasena = false;
         this.botonDeshabilitado = false;
       } else if (json.status == 'success') { //respuesta correcta
         console.log('DGZ: ' + json.usuario.correo + ' ' + json.usuario.nombre + ' ' + json.usuario.apellido + ' ' + json.usuario.carrera);
@@ -133,13 +129,6 @@ export class LoginPage implements OnInit {
       this.db_apellido,
       this.db_carrera
     );
-  }
-
-
-  /* OJO CONTRASEÑA ------------------------------------------------------------------------------- */
-
-  contrasenaVisible() {
-    this.verContrasena = !this.verContrasena; //alterna la visibilidad de la contraseña
   }
 
 }

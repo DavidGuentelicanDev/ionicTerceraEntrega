@@ -24,9 +24,6 @@ export class RegistroUsuarioPage implements OnInit {
   spinnerVisible: boolean = false;
   //boton de registro deshabilitado
   botonDeshabilitado: boolean = false;
-  //contraseña visible
-  verContrasena: boolean = false;
-  verConfirmarContrasena: boolean = false;
 
 
   /* CONSTRUCTOR ------------------------------------------------------------------------------------ */
@@ -59,7 +56,7 @@ export class RegistroUsuarioPage implements OnInit {
       cssClass: 'toast' //clase del global.scss
     });
 
-    toast.present();
+    await toast.present();
   }
 
   //loading
@@ -72,7 +69,7 @@ export class RegistroUsuarioPage implements OnInit {
       cssClass: 'loading'
     });
 
-    loading.present();
+    await loading.present();
   }
 
 
@@ -90,8 +87,6 @@ export class RegistroUsuarioPage implements OnInit {
         this.mdl_contrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
-        this.verContrasena = false;
-        this.verConfirmarContrasena = false;
       } else if (!correoRegex.test(this.mdl_correo)) { //valida que correo tenga formato correo, mensaje plano
         this.mostrarToast('Debes ingresar un formato válido de correo electrónico', 'warning', 3000);
         this.mdl_correo = '';
@@ -99,8 +94,6 @@ export class RegistroUsuarioPage implements OnInit {
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
-        this.verContrasena = false;
-        this.verConfirmarContrasena = false;
       } else if (!this.mdl_correo.endsWith('duocuc.cl')) { //valida que el correo tenga dominio @duocuc.cl, mensaje plano
         this.mostrarToast('Debes ingresar un correo válido de DUOC UC', 'warning', 3000);
         this.mdl_correo = '';
@@ -108,24 +101,18 @@ export class RegistroUsuarioPage implements OnInit {
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
-        this.verContrasena = false;
-        this.verConfirmarContrasena = false;
       } else if (this.mdl_contrasena.length < 3) { //validar que contraseña tenga un largo minimo de n, mensaje plano
         this.mostrarToast('La contraseña debe tener una extensión mínima de 3 caracteres', 'warning', 3000);
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
-        this.verContrasena = false;
-        this.verConfirmarContrasena = false;
       } else if (this.mdl_contrasena != this.mdl_confirmarContrasena) { //valida que contraseña y confirmar contraseña sean distintas, envia mensaje plano
         this.mostrarToast('Las contraseñas no coinciden', 'warning', 3000);
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
-        this.verContrasena = false;
-        this.verConfirmarContrasena = false;
       } else if (this.mdl_contrasena == this.mdl_confirmarContrasena) { //contraseña y confirmar contraseña son iguales
         //extras
         let extras: NavigationExtras = {
@@ -150,8 +137,6 @@ export class RegistroUsuarioPage implements OnInit {
           this.mdl_contrasena = '';
           this.mdl_confirmarContrasena = '';
           this.botonDeshabilitado = false;
-          this.verContrasena = false;
-          this.verConfirmarContrasena = false;
         } else if (json.status == 'success') { //validacion correcta
           this.mostrarToast(json.message, 'success', 1500); //mensaje parametrizado en la respuesta de la api
           this.mostrarLoading('Volviendo al Inicio de Sesión', 2000); //mostrar loading
@@ -164,19 +149,6 @@ export class RegistroUsuarioPage implements OnInit {
 
       this.spinnerVisible = false;
     }, 1000);
-  }
-
-
-  /* OJO CONTRASEÑA -------------------------------------------------------------------------------- */
-
-  //contraseña visible
-  contrasenaVisible() {
-    this.verContrasena = !this.verContrasena; //alterna la visibilidad de la contraseña
-  }
-
-  //confirmar contraseña visible
-  confirmarContrasenaVisible() {
-    this.verConfirmarContrasena = !this.verConfirmarContrasena; //alterna la visibilidad de la contraseña
   }
 
 }
