@@ -70,10 +70,12 @@ export class BarraMenuComponent  implements OnInit {
   }
 
   //navegar al principal
-  principal() {
+  async principal() {
     let extras: NavigationExtras = {
       replaceUrl: true
     }
+
+    await this.menuCtrl.close('menu-end');
 
     setTimeout(() => {
       this.router.navigate(['principal'], extras);
