@@ -69,13 +69,18 @@ export class BarraMenuComponent  implements OnInit {
     this.menuCtrl.open('menu-end');
   }
 
+  //cerrar el menu lateral
+  cerrarMenu() {
+    this.menuCtrl.close('menu-end');
+  }
+
   //navegar al principal
-  async principal() {
+  principal() {
     let extras: NavigationExtras = {
       replaceUrl: true
     }
 
-    await this.menuCtrl.close('menu-end');
+    this.cerrarMenu();
 
     setTimeout(() => {
       this.router.navigate(['principal'], extras);
@@ -83,12 +88,12 @@ export class BarraMenuComponent  implements OnInit {
   }
 
   //navegar a actualizacion de datos
-  async actualizacionDatos() {
+  actualizacionDatos() {
     let extras: NavigationExtras = {
       replaceUrl: true
     }
 
-    await this.menuCtrl.close('menu-end');
+    this.cerrarMenu();
 
     setTimeout(() => {
       this.router.navigate(['actualizacion-datos'], extras);
@@ -96,12 +101,12 @@ export class BarraMenuComponent  implements OnInit {
   }
 
   //navegar a sedes
-  async sedes() {
+  sedes() {
     let extras: NavigationExtras = {
       replaceUrl: true
     }
 
-    await this.menuCtrl.close('menu-end');
+    this.cerrarMenu();
 
     setTimeout(() => {
       this.router.navigate(['sedes'], extras);
@@ -109,12 +114,12 @@ export class BarraMenuComponent  implements OnInit {
   }
 
   //navegar a asistencia
-  async asistencia() {
+  asistencia() {
     let extras: NavigationExtras = {
       replaceUrl: true
     }
 
-    await this.menuCtrl.close('menu-end');
+    this.cerrarMenu();
 
     setTimeout(() => {
       this.router.navigate(['asistencia'], extras);
