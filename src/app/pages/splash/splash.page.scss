@@ -1,6 +1,6 @@
 //background
 .background-color {
-    --background: radial-gradient(circle, rgb(174, 88, 88) 85%, rgba(27,0,43,1) 100%);
+    --background: #343434;
 }
 
 .background-imagen {
@@ -9,8 +9,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('/assets/images/splash.svg');
-    background-size: 60%;
+    background-image: url('/assets/images/splash.png');
+    background-size: 95%;
     background-repeat: no-repeat;
     background-position: center;
 }
