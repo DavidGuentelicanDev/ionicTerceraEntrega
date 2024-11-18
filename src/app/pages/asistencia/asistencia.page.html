@@ -6,40 +6,38 @@
         <ion-refresher-content></ion-refresher-content>
     </ion-refresher>
     <!--card con asignaturas-->
-    <ion-card color="dark">
-        <ng-container *ngIf="!skeletonsCargando">
-            <ion-card *ngFor="let asignatura of lista_asignaturas" [color]="asignatura.color">
-                <ion-card-header>
-                    <ion-card-title class="titulo-centrado">{{ asignatura.nombre }}</ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                    <p>Sigla del curso: <strong>{{ asignatura.sigla }}</strong></p>
-                    <p>Clases presentes: <strong>{{ asignatura.presente }}</strong></p>
-                    <p>Clases ausentes: <strong>{{ asignatura.ausente }}</strong></p>
-                    <p>Porcentaje de asistencia: <strong>{{ asignatura.porcentajeAsistencia }}%</strong></p>
-                    <p>Status: <strong>{{ asignatura.status }}</strong></p>
-                </ion-card-content>
-            </ion-card>
-        </ng-container>
-        <!-- Skeleton para asignaturas -->
-        <ng-container *ngIf="skeletonsCargando">
-            <ion-card *ngFor="let asignatura of lista_asignaturas">
-                <ion-card-header>
-                    <ion-card-title class="titulo-centrado">
-                        <ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text>
-                        <ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text>
-                    </ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                    <p><ion-skeleton-text animated style="width: 60%; margin-bottom: 13px;"></ion-skeleton-text></p>
-                    <p><ion-skeleton-text animated style="width: 50%; margin-bottom: 13px;"></ion-skeleton-text></p>
-                    <p><ion-skeleton-text animated style="width: 40%; margin-bottom: 13px;"></ion-skeleton-text></p>
-                    <p><ion-skeleton-text animated style="width: 55%; margin-bottom: 13px;"></ion-skeleton-text></p>
-                    <p><ion-skeleton-text animated style="width: 60%; margin-bottom: 13px;"></ion-skeleton-text></p>
-                </ion-card-content>
-            </ion-card>
-        </ng-container>
-    </ion-card>
+    <ng-container *ngIf="!skeletonsCargando">
+        <ion-card *ngFor="let asignatura of lista_asignaturas" [color]="asignatura.color">
+            <ion-card-header>
+                <ion-card-title class="titulo-centrado">{{ asignatura.nombre }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>Sigla del curso: <strong>{{ asignatura.sigla }}</strong></p>
+                <p>Clases presentes: <strong>{{ asignatura.presente }}</strong></p>
+                <p>Clases ausentes: <strong>{{ asignatura.ausente }}</strong></p>
+                <p>Porcentaje de asistencia: <strong>{{ asignatura.porcentajeAsistencia }}%</strong></p>
+                <p>Status: <strong>{{ asignatura.status }}</strong></p>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
+    <!-- Skeleton para asignaturas -->
+    <ng-container *ngIf="skeletonsCargando">
+        <ion-card *ngFor="let asignatura of lista_asignaturas">
+            <ion-card-header>
+                <ion-card-title class="titulo-centrado">
+                    <ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text>
+                    <ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text>
+                </ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p><ion-skeleton-text animated style="width: 60%; margin-bottom: 13px;"></ion-skeleton-text></p>
+                <p><ion-skeleton-text animated style="width: 50%; margin-bottom: 13px;"></ion-skeleton-text></p>
+                <p><ion-skeleton-text animated style="width: 40%; margin-bottom: 13px;"></ion-skeleton-text></p>
+                <p><ion-skeleton-text animated style="width: 55%; margin-bottom: 13px;"></ion-skeleton-text></p>
+                <p><ion-skeleton-text animated style="width: 60%; margin-bottom: 13px;"></ion-skeleton-text></p>
+            </ion-card-content>
+        </ion-card>
+    </ng-container>
 </ion-content>
 
 <ion-footer [translucent]="true">

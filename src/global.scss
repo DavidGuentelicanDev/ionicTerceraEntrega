@@ -41,7 +41,7 @@
 
 //background general
 .background-general {
-    --background: url('/assets/images/bg_libros.jpg') no-repeat center center / cover;
+    --background: radial-gradient(circle, rgb(181, 15, 15) 0%, rgb(18, 1, 1) 70%);
 }
 
 //inputs
@@ -68,6 +68,6 @@
 
 //progress bar
 .progreso-barra {
-    --background: #fdfdfd;
-    --progress-background: #0b0b0b;
+    --background: #f3e5e6;
+    --progress-background: #1e1c1c;
 }
