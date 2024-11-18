@@ -171,7 +171,7 @@ export class AsistenciaPage implements OnInit {
     console.log('DGZ status: ' + json.status);
 
     if (json.status == 'success') {
-      await this.alertQR('Presente', json.message + ': ' + this.siglaQR + ' - ' + this.fechaClaseQR);
+      await this.alertQR('Presente', 'Presente para la clase de ' + this.nombreQR + ' del día ' + this.fechaClaseQR);
     } else if (json.status == 'error') {
       await this.alertQR('Error', json.message);
     }
