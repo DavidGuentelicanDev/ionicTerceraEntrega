@@ -117,7 +117,7 @@ export class PrincipalPage implements OnInit {
     this.barraProgresoVisible = true;
 
     //primero borrar el usuario logueado
-    await this.eliminarUsuarioLogueado(this.correo);
+    await this.eliminarUsuarioLogueado();
 
     let extras: NavigationExtras = {
       replaceUrl: true
@@ -148,8 +148,8 @@ export class PrincipalPage implements OnInit {
   }
 
   //funcion para borrar usuario logueado
-  async eliminarUsuarioLogueado(correo: string) {
-    await this.db.eliminarUsuarioLogueado(correo);
+  async eliminarUsuarioLogueado() {
+    await this.db.eliminarUsuarioLogueado();
   }
 
 

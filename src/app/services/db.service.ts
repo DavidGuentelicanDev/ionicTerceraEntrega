@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-//importacion para sqlite
-import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx';
+import { SQLite, SQLiteObject } from '@awesome-cordova-plugins/sqlite/ngx'; //importacion para sqlite
 
 @Injectable({
   providedIn: 'root'
@@ -82,12 +81,12 @@ export class DbService {
   }
 
   //eliminar usuario logueado
-  async eliminarUsuarioLogueado(correo: string) {
+  async eliminarUsuarioLogueado() {
     await this.abrirDB();
 
     try {
-      await this.dbInstancia?.executeSql('DELETE FROM USUARIO_LOGUEADO WHERE CORREO = ?', [correo]);
-      console.log('DGZ: USUARIO LOGUEADO ' + correo + ' BORRADO OK');
+      await this.dbInstancia?.executeSql('DELETE FROM USUARIO_LOGUEADO', []);
+      console.log('DGZ: USUARIO BORRADO OK');
     } catch (e) {
       console.log('DGZ: ' + JSON.stringify(e));
     }

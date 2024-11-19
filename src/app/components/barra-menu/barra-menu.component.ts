@@ -151,7 +151,7 @@ export class BarraMenuComponent  implements OnInit {
     this.barraProgresoVisible = true;
 
     //primero borrar el usuario logueado
-    await this.eliminarUsuarioLogueado(this.correoLogueado);
+    await this.eliminarUsuarioLogueado();
 
     let extras: NavigationExtras = {
       replaceUrl: true
@@ -193,8 +193,8 @@ export class BarraMenuComponent  implements OnInit {
   }
 
   //funcion para borrar usuario logueado
-  async eliminarUsuarioLogueado(correo: string) {
-    await this.db.eliminarUsuarioLogueado(correo);
+  async eliminarUsuarioLogueado() {
+    await this.db.eliminarUsuarioLogueado();
   }
 
 }

@@ -7,14 +7,12 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
-//importacion para APIs
-import { HttpClientModule } from '@angular/common/http';
-//importacion para sqlite
-import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx';
+import { HttpClientModule } from '@angular/common/http'; //importacion para APIs
+import { SQLite } from '@awesome-cordova-plugins/sqlite/ngx'; //importacion para sqlite
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule], //agregar HttpClieteModule para Apis
+  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule], //agregar HttpClientModule para Apis
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SQLite], //agregar sqlite aca
   bootstrap: [AppComponent],
 })
