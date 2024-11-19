@@ -65,8 +65,7 @@ export class RegistroUsuarioPage implements OnInit {
       message: mensaje,
       duration: duracion,
       spinner: 'circles',
-      mode: 'md',
-      cssClass: 'loading'
+      mode: 'md'
     });
 
     await loading.present();

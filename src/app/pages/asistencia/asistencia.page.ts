@@ -188,8 +188,7 @@ export class AsistenciaPage implements OnInit {
     const loading = await this.loadingCtrl.create({
       message: 'Leyendo el código QR...',
       spinner: 'circles',
-      mode: 'md',
-      cssClass: 'loading'
+      mode: 'md'
     });
 
     try {

@@ -41,7 +41,7 @@
 
 //background general
 .background-general {
-    --background: radial-gradient(circle, rgb(181, 15, 15) 0%, rgb(18, 1, 1) 70%);
+    --background: linear-gradient(0deg, rgba(44,13,87,1) 0%, rgba(13,12,12,1) 30%, rgba(13,12,12,1) 70%, rgba(44,13,87,1) 100%);
 }
 
 //inputs
@@ -57,13 +57,6 @@
 //toast
 .toast {
     font-weight: bold; //texto en negrita
-}
-
-//loading
-.loading {
-    --background: radial-gradient(circle, rgba(255,0,0,1) 0%, rgba(2,0,36,1) 100%);
-    --spinner-color: #f3e5e6;
-    color: #f3e5e6;
 }
 
 //progress bar

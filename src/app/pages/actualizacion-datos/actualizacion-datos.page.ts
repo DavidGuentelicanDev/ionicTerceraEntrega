@@ -68,8 +68,7 @@ export class ActualizacionDatosPage implements OnInit {
       message: mensaje,
       duration: duracion,
       spinner: 'circles',
-      mode: 'md',
-      cssClass: 'loading'
+      mode: 'md'
     });
 
     await loading.present();
