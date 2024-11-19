@@ -54,8 +54,6 @@ export class LoginPage implements OnInit {
       message: mensaje,
       color: color,
       duration: duracion,
-      position: 'bottom',
-      mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
 
@@ -80,7 +78,6 @@ export class LoginPage implements OnInit {
   async login() {
     this.spinnerVisible = true;
     this.botonDeshabilitado = true;
-    this.barraProgresoVisible = true;
 
     let datos = this.api.login(this.mdl_correo, this.mdl_contrasena);
     let respuesta = await lastValueFrom(datos);
@@ -98,6 +95,7 @@ export class LoginPage implements OnInit {
       } else if (json.status == 'success') { //respuesta correcta
         console.log('DGZ: ' + json.usuario.correo + ' ' + json.usuario.nombre + ' ' + json.usuario.apellido + ' ' + json.usuario.carrera);
         //guardando usuario que se loguea
+        this.barraProgresoVisible = true; //se inicia el ion-progress-bar solo al ser login correcto
         this.db_correo = json.usuario.correo;
         this.db_nombre = json.usuario.nombre;
         this.db_apellido = json.usuario.apellido;
@@ -109,9 +107,9 @@ export class LoginPage implements OnInit {
           replaceUrl: true
         }
 
-        this.mostrarToast('Bienvenid@ ' + this.db_nombre + ' ' + this.db_apellido , 'success', 3000);
+        await this.mostrarToast('Bienvenid@ ' + this.db_nombre + ' ' + this.db_apellido , 'success', 3000);
 
-        setTimeout(async () => {
+        setTimeout(() => {
           this.barraProgresoVisible = false;
           this.router.navigate(['principal'], extras);
         }, 2000);
