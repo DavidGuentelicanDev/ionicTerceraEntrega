@@ -30,10 +30,10 @@ Los comandos necesarios para que la aplicación funcione son
 
 - Para crear la app: ionic start nombre-de-la-app blank --type=angular
 
-- Para instalar SQLite: npm install cordova-sqlite-storage / npm install @awesome-cordova-plugins/sqlite
+- Para instalar SQLite: npm install cordova-sqlite-storage /-/ npm install @awesome-cordova-plugins/sqlite
 
 - Para instalar el MLKit de Google: npm install @capacitor-mlkit/barcode-scanning
 
-- Para nativizar la app en Android: ionic cap sync / npm install @capacitor/android / npx cap add android
+- Para nativizar la app en Android: ionic cap sync /-/ npm install @capacitor/android /-/ npx cap add android
 
-- Para personalizar splash e ícono de la app: npm install @capacitor/splash-screen / npm install @capacitor/assets / npx capacitor-assets generate
+- Para personalizar splash e ícono de la app: npm install @capacitor/splash-screen /-/ npm install @capacitor/assets /-/ npx capacitor-assets generate
