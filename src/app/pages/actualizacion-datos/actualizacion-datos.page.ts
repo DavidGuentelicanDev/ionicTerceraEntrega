@@ -54,8 +54,6 @@ export class ActualizacionDatosPage implements OnInit {
       message: mensaje,
       color: color,
       duration: duracion,
-      position: 'bottom',
-      mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
 
@@ -67,8 +65,7 @@ export class ActualizacionDatosPage implements OnInit {
     const loading = await this.loadingCtrl.create({
       message: mensaje,
       duration: duracion,
-      spinner: 'circles',
-      mode: 'md'
+      spinner: 'circles'
     });
 
     await loading.present();
@@ -132,7 +129,7 @@ export class ActualizacionDatosPage implements OnInit {
           this.mdl_confirmarContrasenaNueva = '';
           this.spinnerVisible = false;
           this.botonDeshabilitado = false;
-        } else {
+        } else if (json.status == 'success') { //actualizacion correcta
           this.mostrarToast(json.message, 'success', 1500);
           this.mostrarLoading('Volviendo a la pantalla Principal', 1500);
 

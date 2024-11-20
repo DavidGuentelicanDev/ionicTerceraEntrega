@@ -61,22 +61,21 @@ export class SedesPage implements OnInit {
       message: mensaje,
       color: color,
       duration: duracion,
-      position: 'bottom',
-      mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
-    toast.present();
+
+    await toast.present();
   }
 
 
   /* REFRESHER -------------------------------------------------------------------------------------- */
 
-  handleRefresh(event: CustomEvent<RefresherEventDetail>) {
-    setTimeout(() => {
+  async handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+    setTimeout(async () => {
       //elementos que se van a recargar
       this.skeletonsCargando = true;
-      this.mostrarSedes();
-      setTimeout(async () => {
+      await this.mostrarSedes();
+      setTimeout(() => {
         this.skeletonsCargando = false;
       }, 3000);
 
@@ -165,7 +164,7 @@ export class SedesPage implements OnInit {
         //guardar like en la tabla megusta
         await this.guardarLike();
         await this.contarLikePorSede(); //actualiza el contador
-        this.mostrarToast('Me gusta', 'dark', 1000);
+        await this.mostrarToast('Me gusta', 'dark', 1000);
       } catch (e) {
         console.log('DGZ: Error al guardar me gusta ' + JSON.stringify(e));
       }
@@ -178,7 +177,7 @@ export class SedesPage implements OnInit {
         //eliminar el like de la tabla megusta
         await this.eliminarLike();
         await this.contarLikePorSede(); //actualiza el contador
-        this.mostrarToast('Ya NO me gusta', 'dark', 1000);
+        await this.mostrarToast('Ya NO me gusta', 'dark', 1000);
       } catch (e) {
         console.log('DGZ: Error al eliminar me gusta ' + JSON.stringify(e));
       }

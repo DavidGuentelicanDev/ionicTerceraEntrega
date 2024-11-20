@@ -51,8 +51,6 @@ export class RegistroUsuarioPage implements OnInit {
       message: mensaje,
       color: color,
       duration: duracion,
-      position: 'bottom',
-      mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
 
@@ -64,8 +62,7 @@ export class RegistroUsuarioPage implements OnInit {
     const loading = await this.loadingCtrl.create({
       message: mensaje,
       duration: duracion,
-      spinner: 'circles',
-      mode: 'md'
+      spinner: 'circles'
     });
 
     await loading.present();
@@ -82,49 +79,43 @@ export class RegistroUsuarioPage implements OnInit {
 
     setTimeout(async () => {
       if (this.mdl_confirmarContrasena == '') { //valida que el usuario ingrese la confirmacion de contraseña, envia mensaje plano
-        this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
+        await this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
         this.mdl_contrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
       } else if (!correoRegex.test(this.mdl_correo)) { //valida que correo tenga formato correo, mensaje plano
-        this.mostrarToast('Debes ingresar un formato válido de correo electrónico', 'warning', 3000);
+        await this.mostrarToast('Debes ingresar un formato válido de correo electrónico', 'warning', 3000);
         this.mdl_correo = '';
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
       } else if (!this.mdl_correo.endsWith('duocuc.cl')) { //valida que el correo tenga dominio @duocuc.cl, mensaje plano
-        this.mostrarToast('Debes ingresar un correo válido de DUOC UC', 'warning', 3000);
+        await this.mostrarToast('Debes ingresar un correo válido de DUOC UC', 'warning', 3000);
         this.mdl_correo = '';
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
       } else if (this.mdl_contrasena.length < 3) { //validar que contraseña tenga un largo minimo de n, mensaje plano
-        this.mostrarToast('La contraseña debe tener una extensión mínima de 3 caracteres', 'warning', 3000);
+        await this.mostrarToast('La contraseña debe tener una extensión mínima de 3 caracteres', 'warning', 3000);
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
       } else if (this.mdl_contrasena != this.mdl_confirmarContrasena) { //valida que contraseña y confirmar contraseña sean distintas, envia mensaje plano
-        this.mostrarToast('Las contraseñas no coinciden', 'warning', 3000);
+        await this.mostrarToast('Las contraseñas no coinciden', 'warning', 3000);
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
       } else if (this.mdl_contrasena == this.mdl_confirmarContrasena) { //contraseña y confirmar contraseña son iguales
-        //extras
         let extras: NavigationExtras = {
           replaceUrl: true
         }
 
-        let datos = this.api.crearUsuario(
-          this.mdl_correo,
-          this.mdl_contrasena,
-          this.mdl_nombre,
-          this.mdl_apellido,
-          this.mdl_carrera
-        );
+        //enviar datos a la api y conseguir respuesta
+        let datos = this.api.crearUsuario(this.mdl_correo, this.mdl_contrasena, this.mdl_nombre, this.mdl_apellido, this.mdl_carrera);
         let respuesta = await lastValueFrom(datos);
         let json_texto = JSON.stringify(respuesta);
         let json = JSON.parse(json_texto);
@@ -137,8 +128,8 @@ export class RegistroUsuarioPage implements OnInit {
           this.mdl_confirmarContrasena = '';
           this.botonDeshabilitado = false;
         } else if (json.status == 'success') { //validacion correcta
-          this.mostrarToast(json.message, 'success', 1500); //mensaje parametrizado en la respuesta de la api
-          this.mostrarLoading('Volviendo al Inicio de Sesión', 2000); //mostrar loading
+          await this.mostrarToast(json.message, 'success', 1500); //mensaje parametrizado en la respuesta de la api
+          await this.mostrarLoading('Volviendo al Inicio de Sesión', 2000); //mostrar loading
 
           setTimeout(() => {
             this.router.navigate(['login'], extras);

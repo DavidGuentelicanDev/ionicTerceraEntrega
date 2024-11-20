@@ -68,8 +68,6 @@ export class PrincipalPage implements OnInit {
       message: mensaje,
       color: color,
       duration: duracion,
-      position: 'bottom',
-      mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
 
@@ -79,13 +77,13 @@ export class PrincipalPage implements OnInit {
 
   /* REFRESHER -------------------------------------------------------------------------------------- */
 
-  handleRefresh(event: CustomEvent<RefresherEventDetail>) {
-    setTimeout(() => {
+  async handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+    setTimeout(async () => {
       //elementos que se van a recargar
       this.skeletonsCargando = true;
-      this.mostrarUsuarioLogueado();
+      await this.mostrarUsuarioLogueado();
       this.api.correoUsuario = this.correo;
-      this.obtenerAsignaturas();
+      await this.obtenerAsignaturas();
       setTimeout(() => {
         this.skeletonsCargando = false;
       }, 1000);

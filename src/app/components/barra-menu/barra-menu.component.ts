@@ -53,8 +53,6 @@ export class BarraMenuComponent  implements OnInit {
       message: mensaje,
       color: color,
       duration: duracion,
-      position: 'bottom',
-      mode: 'md', //diseño de material design
       cssClass: 'toast' //clase del global.scss
     });
 
@@ -157,7 +155,7 @@ export class BarraMenuComponent  implements OnInit {
       replaceUrl: true
     }
 
-    this.mostrarToast('Cerrando sesión', 'tertiary', 1500);
+    await this.mostrarToast('Cerrando sesión', 'tertiary', 1500);
 
     setTimeout(() => {
       this.barraProgresoVisible = false;

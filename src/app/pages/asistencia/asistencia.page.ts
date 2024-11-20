@@ -90,11 +90,11 @@ export class AsistenciaPage implements OnInit {
 
   /* REFRESHER -------------------------------------------------------------------------------------- */
 
-  handleRefresh(event: CustomEvent<RefresherEventDetail>) {
-    setTimeout(() => {
+  async handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+    setTimeout(async () => {
       //elementos que se van a recargar
       this.skeletonsCargando = true;
-      this.obtenerAsignaturasYAsistencia();
+      await this.obtenerAsignaturasYAsistencia();
       setTimeout(() => {
         this.skeletonsCargando = false;
       }, 1000);
@@ -187,8 +187,7 @@ export class AsistenciaPage implements OnInit {
     //crear loading
     const loading = await this.loadingCtrl.create({
       message: 'Leyendo el código QR...',
-      spinner: 'circles',
-      mode: 'md'
+      spinner: 'circles'
     });
 
     try {
