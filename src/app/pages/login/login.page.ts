@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
     let json = JSON.parse(json_texto);
-    console.log('DGZ: ' + json.status);
+    //console.log('DGZ: ' + json.status);
 
     setTimeout(async () => {
       if (json.status == 'error') {

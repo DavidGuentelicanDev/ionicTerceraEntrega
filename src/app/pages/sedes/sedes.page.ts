@@ -70,7 +70,7 @@ export class SedesPage implements OnInit {
 
   /* REFRESHER -------------------------------------------------------------------------------------- */
 
-  async handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+  async activarRefresh(event: CustomEvent<RefresherEventDetail>) {
     setTimeout(async () => {
       //elementos que se van a recargar
       this.skeletonsCargando = true;
@@ -155,7 +155,7 @@ export class SedesPage implements OnInit {
 
   //funcion para dar like
   async darLike() {
-    if (this.like == false) {
+    if (this.like == false) { //dar like
       this.like = true;
       this.colorLike = 'danger';
       this.tipoLike = 'heart';
@@ -168,7 +168,7 @@ export class SedesPage implements OnInit {
       } catch (e) {
         console.log('DGZ: Error al guardar me gusta ' + JSON.stringify(e));
       }
-    } else {
+    } else { //quitar like
       this.like = false;
       this.colorLike = 'light';
       this.tipoLike = 'heart-outline';

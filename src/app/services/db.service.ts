@@ -27,7 +27,7 @@ export class DbService {
         name: 'datos.db',
         location: 'default'
       });
-      console.log('DGZ: BASE DE DATOS OK');
+      //console.log('DGZ: BASE DE DATOS OK');
     } catch (e) {
       console.log('DGZ - PROBLEMA AL INICIAR LA BASE DE DATOS: ' + JSON.stringify(e));
     }
@@ -39,7 +39,7 @@ export class DbService {
 
     try {
       await this.dbInstancia?.executeSql('CREATE TABLE IF NOT EXISTS USUARIO_LOGUEADO (CORREO VARCHAR(30), NOMBRE VARCHAR(30), APELLIDO VARCHAR(30), CARRERA VARCHAR(50))', []);
-      console.log('DGZ: TABLA USUARIO_LOGUEADO OK');
+      //console.log('DGZ: TABLA USUARIO_LOGUEADO OK');
     } catch (e) {
       console.log('DGZ: ' + JSON.stringify(e));
     }
@@ -52,7 +52,7 @@ export class DbService {
     //insertar datos
     try {
       await this.dbInstancia?.executeSql('INSERT INTO USUARIO_LOGUEADO VALUES(?, ?, ?, ?)', [correo, nombre, apellido, carrera]);
-      console.log('DGZ: USUARIO LOGUEADO [correo: ' + correo + ', nombre: ' + nombre + ', apellido: ' + apellido + ', carrera: ' + carrera + '] GUARDADO OK');
+      //console.log('DGZ: USUARIO LOGUEADO [correo: ' + correo + ', nombre: ' + nombre + ', apellido: ' + apellido + ', carrera: ' + carrera + '] GUARDADO OK');
     } catch (e) {
       console.log('DGZ: ' + JSON.stringify(e));
     }
@@ -86,7 +86,7 @@ export class DbService {
 
     try {
       await this.dbInstancia?.executeSql('DELETE FROM USUARIO_LOGUEADO', []);
-      console.log('DGZ: USUARIO BORRADO OK');
+      //console.log('DGZ: USUARIO BORRADO OK');
     } catch (e) {
       console.log('DGZ: ' + JSON.stringify(e));
     }
@@ -101,7 +101,7 @@ export class DbService {
 
     try {
       await this.dbInstancia?.executeSql('CREATE TABLE IF NOT EXISTS MEGUSTA (USUARIO VARCHAR(30), SEDE VARCHAR(50))', []);
-      console.log('DGZ: TABLA MEGUSTA OK');
+      //console.log('DGZ: TABLA MEGUSTA OK');
     } catch (e) {
       console.log('DGZ: ' + JSON.stringify(e));
     }
@@ -113,7 +113,7 @@ export class DbService {
 
     try {
       await this.dbInstancia?.executeSql('INSERT INTO MEGUSTA VALUES (?, ?)', [usuario, sede]);
-      console.log('DGZ: ME GUSTA GUARDADO ' + usuario + ' ' + sede);
+      //console.log('DGZ: ME GUSTA GUARDADO ' + usuario + ' ' + sede);
     } catch (e) {
       console.log('DGZ: ' + JSON.stringify(e));
     }
@@ -125,7 +125,7 @@ export class DbService {
 
     try {
       await this.dbInstancia?.executeSql('DELETE FROM MEGUSTA WHERE USUARIO = ? AND SEDE = ?', [usuario, sede]);
-      console.log('DGZ: ME GUSTA DEL USUARIO ' + usuario + ' BORRADO OK');
+      //console.log('DGZ: ME GUSTA DEL USUARIO ' + usuario + ' BORRADO OK');
     } catch (e) {
       console.log('DGZ: ' + JSON.stringify(e));
     }
@@ -137,7 +137,7 @@ export class DbService {
 
     try {
       let resultado = await this.dbInstancia?.executeSql('SELECT USUARIO, SEDE FROM MEGUSTA WHERE USUARIO = ? AND SEDE = ?', [usuario, sede]);
-      console.log('DGZ: HAY UN ME GUSTA GUARDADO');
+      //console.log('DGZ: HAY UN ME GUSTA GUARDADO');
       return resultado?.rows.length > 0;
     } catch (e) {
       console.log('DGZ: ' + JSON.stringify(e));
@@ -156,7 +156,7 @@ export class DbService {
       if (resultado?.rows.length > 0) {
         //entonces cuenta la cantidad de filas
         let contador = resultado.rows.item(0).total;
-        console.log('DGZ: TOTAL ME GUSTA PARA SEDE ' + sede + ' ES ' + contador);
+        //console.log('DGZ: TOTAL ME GUSTA PARA SEDE ' + sede + ' ES ' + contador);
         return contador; //me devuelve el total
       }
       return 0;

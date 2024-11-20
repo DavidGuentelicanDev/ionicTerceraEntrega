@@ -77,7 +77,7 @@ export class PrincipalPage implements OnInit {
 
   /* REFRESHER -------------------------------------------------------------------------------------- */
 
-  async handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+  async activarRefresh(event: CustomEvent<RefresherEventDetail>) {
     setTimeout(async () => {
       //elementos que se van a recargar
       this.skeletonsCargando = true;
@@ -157,7 +157,7 @@ export class PrincipalPage implements OnInit {
     let datos = this.api.obtenerAsignaturasYAsistencia();
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
-    console.log('DGZ asignaturas: ' + json_texto);
+    //console.log('DGZ asignaturas: ' + json_texto);
     let json = JSON.parse(json_texto);
 
     this.lista_asignaturas = []; //limpiar lista

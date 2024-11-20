@@ -19,6 +19,11 @@ export class AsistenciaPage implements OnInit {
   //variables de las asignaturas
   lista_asignaturas: any[] = [];
   TOTAL_CLASES: number = 5;
+  PORCENTAJE: number = 100;
+  decimalAsistencia: number = 0;
+  porcentajeAsistencia: number = 0;
+  estadoAsignatura: string = '';
+  colorPorEstado: string = '';
   //skeletons
   skeletonsCargando: boolean = true;
   //para capturar texto de qr
@@ -90,11 +95,12 @@ export class AsistenciaPage implements OnInit {
 
   /* REFRESHER -------------------------------------------------------------------------------------- */
 
-  async handleRefresh(event: CustomEvent<RefresherEventDetail>) {
+  async activarRefresh(event: CustomEvent<RefresherEventDetail>) {
     setTimeout(async () => {
       //elementos que se van a recargar
       this.skeletonsCargando = true;
       await this.obtenerAsignaturasYAsistencia();
+
       setTimeout(() => {
         this.skeletonsCargando = false;
       }, 1000);
@@ -107,19 +113,40 @@ export class AsistenciaPage implements OnInit {
   /* MOSTRAR ASIGNATURAS --------------------------------------------------------------------------- */
 
   //calcular el porcentaje de asistencia
-  calcularPorcentajeAsistencia(presente: number): number {
-    let decimalAsistencia = presente / this.TOTAL_CLASES;
-    return decimalAsistencia * 100;
+  calcularPorcentajeAsistencia(presente: number) {
+    //resetear variables
+    this.decimalAsistencia = 0;
+    this.porcentajeAsistencia = 0;
+
+    //calculo
+    this.decimalAsistencia = presente / this.TOTAL_CLASES;
+    this.porcentajeAsistencia = this.decimalAsistencia * this.PORCENTAJE;
   }
 
   //status de la asignatura
-  determinarStatusAsignatura(porcentaje: number): string {
-    return porcentaje >= 70 ? 'Aprobado por Chayanne' : 'Reprobado por Inasistencia';
+  determinarEstadoAsignatura(porcentaje: number) {
+    //resetear variables
+    this.estadoAsignatura = '';
+
+    //calculo
+    if (porcentaje < 70) {
+      this.estadoAsignatura = 'Reprobado por Inasistencia';
+    } else if (porcentaje >= 70) {
+      this.estadoAsignatura = 'Aprobado por Chayanne';
+    }
   }
 
   //definir color del card segun status
-  definirColorStatus(status: string): string {
-    return status === 'Aprobado por Chayanne' ? 'success' : 'danger';
+  definirColorEstado(estado: string) {
+    //resetear variables
+    this.colorPorEstado = '';
+
+    //calculo
+    if (estado == 'Reprobado por Inasistencia') {
+      this.colorPorEstado = 'danger';
+    } else if (estado == 'Aprobado por Chayanne') {
+      this.colorPorEstado = 'success';
+    }
   }
 
   //obtener los datos de las asignaturas
@@ -127,7 +154,7 @@ export class AsistenciaPage implements OnInit {
     let datos = this.api.obtenerAsignaturasYAsistencia();
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
-    console.log('DGZ asignaturas: ' + json_texto);
+    //console.log('DGZ asignaturas: ' + json_texto);
     let json = JSON.parse(json_texto);
 
     this.lista_asignaturas = []; //limpiar lista
@@ -142,17 +169,20 @@ export class AsistenciaPage implements OnInit {
         asignatura.presente = json[x][y].presente;
         asignatura.ausente = json[x][y].ausente;
 
-        //calcular porcentaje de asistencia
-        asignatura.porcentajeAsistencia = this.calcularPorcentajeAsistencia(asignatura.presente);
-        console.log('DGZ PORCENTAJE: ' + asignatura.porcentajeAsistencia);
+        //calcular porcentaje de asistencia de la asignatura
+        this.calcularPorcentajeAsistencia(asignatura.presente);
+        asignatura.porcentajeAsistencia = this.porcentajeAsistencia;
+        //console.log('DGZ PORCENTAJE: ' + asignatura.porcentajeAsistencia);
 
-        //determinar status de la asignatura
-        asignatura.status = this.determinarStatusAsignatura(asignatura.porcentajeAsistencia);
-        console.log('DGZ STATUS: ' + asignatura.status);
+        //determinar estado de la asignatura
+        this.determinarEstadoAsignatura(asignatura.porcentajeAsistencia);
+        asignatura.estado = this.estadoAsignatura;
+        //console.log('DGZ STATUS: ' + asignatura.estado);
 
         //definir color del card
-        asignatura.color = this.definirColorStatus(asignatura.status);
-        console.log('DGZ COLOR: ' + asignatura.color);
+        this.definirColorEstado(asignatura.estado);
+        asignatura.color = this.colorPorEstado;
+        //console.log('DGZ COLOR: ' + asignatura.color);
 
         this.lista_asignaturas.push(asignatura); //guardar en la lista
       }
@@ -168,7 +198,7 @@ export class AsistenciaPage implements OnInit {
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
     let json = JSON.parse(json_texto);
-    console.log('DGZ status: ' + json.status);
+    //console.log('DGZ status: ' + json.status);
 
     if (json.status == 'success') {
       await this.alertQR('Presente', 'Presente para la clase de ' + this.nombreQR + ' del día ' + this.fechaClaseQR);
@@ -198,19 +228,19 @@ export class AsistenciaPage implements OnInit {
         //preguntar si el lector de qr tuvo resultado
         if (resultado.barcodes.length > 0) {
           this.textoQR = resultado.barcodes[0].displayValue; //captura el resultado
-          console.log('DGZ QR: ' + this.textoQR);
+          //console.log('DGZ QR: ' + this.textoQR);
 
           //procesar y separar el texto obtenido del qr
           let textoSeparado = this.textoQR.split('|'); //funcion split
-          console.log('DGZ QR separado: ' + textoSeparado);
+          //console.log('DGZ QR separado: ' + textoSeparado);
 
           //extraer del split y asignar el texto a variables
           this.siglaQR = textoSeparado[0];
           this.nombreQR = textoSeparado[1];
           this.fechaClaseQR = textoSeparado[2];
-          console.log('DGZ SIGLA: ' + this.siglaQR);
-          console.log('DGZ NOMBRE: ' + this.nombreQR);
-          console.log('DGZ FECHA: ' + this.fechaClaseQR);
+          // console.log('DGZ SIGLA: ' + this.siglaQR);
+          // console.log('DGZ NOMBRE: ' + this.nombreQR);
+          // console.log('DGZ FECHA: ' + this.fechaClaseQR);
         }
 
         this.skeletonsCargando = true; //skeletons activados

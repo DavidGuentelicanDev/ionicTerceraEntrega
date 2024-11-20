@@ -119,7 +119,7 @@ export class RegistroUsuarioPage implements OnInit {
         let respuesta = await lastValueFrom(datos);
         let json_texto = JSON.stringify(respuesta);
         let json = JSON.parse(json_texto);
-        console.log('DGZ: ' + json.status + json.message);
+        //console.log('DGZ: ' + json.status + ' - ' + json.message);
 
         if (json.status == 'error') { //errores de la api
           this.mostrarToast(json.message, 'warning', 3000); //mensaje parametrizado en la respuesta de la api

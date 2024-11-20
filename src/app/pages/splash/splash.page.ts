@@ -31,12 +31,12 @@ export class SplashPage implements OnInit {
     let usuario = await this.db.obtenerUsuarioLogueado();
 
     if (usuario) { //si hay usuario logueado, navega al principal
-      console.log('DGZ: HAY UN USUARIO LOGUEADO');
+      //console.log('DGZ: HAY UN USUARIO LOGUEADO');
       setTimeout(() => {
         this.router.navigate(['principal'], extras);
       }, 1000);
     } else { //si no hay usuario logueado, navega al login
-      console.log('DGZ: NO HAY USUARIO');
+      //console.log('DGZ: NO HAY USUARIO');
       setTimeout(() => {
         this.router.navigate(['login'], extras);
       }, 1000);

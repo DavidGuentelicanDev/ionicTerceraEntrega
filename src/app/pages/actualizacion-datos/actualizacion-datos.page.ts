@@ -120,7 +120,7 @@ export class ActualizacionDatosPage implements OnInit {
         let respuesta = await lastValueFrom(datos);
         let json_texto = JSON.stringify(respuesta);
         let json = JSON.parse(json_texto);
-        console.log('DGZ: ' + json.status + json.message);
+        //console.log('DGZ: ' + json.status + ' - ' + json.message);
 
         //se capturan los mensajes de la api segun la respuesta
         if (json.status == 'error') { //actualizacion incorrecta, mensaje parametrizado en la api
