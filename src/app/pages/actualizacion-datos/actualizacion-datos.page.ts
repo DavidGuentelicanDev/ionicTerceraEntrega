@@ -91,7 +91,7 @@ export class ActualizacionDatosPage implements OnInit {
     this.botonDeshabilitado = true;
 
     setTimeout(async() => {
-      if (this.mdl_confirmarContrasenaNueva == '') { //validar adicionalmente el campo confirmar contraseña nueva con mensaje plano
+      if (!this.mdl_confirmarContrasenaNueva) { //validar adicionalmente el campo confirmar contraseña nueva con mensaje plano
         this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
@@ -107,7 +107,15 @@ export class ActualizacionDatosPage implements OnInit {
         this.mdl_confirmarContrasenaNueva = '';
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
+      } else if (this.mdl_correo != this.correoLogueado) { //el correo ingresado no corresponde al correo logueado
+        this.mostrarToast('El correo ingresado no corresponde al usuario logueado', 'warning', 3000);
+        this.mdl_correo = '';
+        this.mdl_contrasenaNueva = '';
+        this.mdl_confirmarContrasenaNueva = '';
+        this.spinnerVisible = false;
+        this.botonDeshabilitado = false;
       } else if (this.mdl_contrasenaNueva == this.mdl_confirmarContrasenaNueva) { //nueva contraseña y confirmar nueva contraseña iguales
+        //enviar datos a la api
         let datos = this.api.actualizarUsuario(this.mdl_correo, this.mdl_contrasenaNueva, this.mdl_carrera);
         let respuesta = await lastValueFrom(datos);
         let json_texto = JSON.stringify(respuesta);
@@ -115,20 +123,13 @@ export class ActualizacionDatosPage implements OnInit {
         console.log('DGZ: ' + json.status + json.message);
 
         //se capturan los mensajes de la api segun la respuesta
-        if (json.status == 'error') {
+        if (json.status == 'error') { //actualizacion incorrecta, mensaje parametrizado en la api
           this.mostrarToast(json.message, 'warning', 3000);
           this.botonDeshabilitado = false;
           this.mdl_correo = '';
           this.mdl_contrasenaNueva = '';
           this.mdl_carrera = '';
           this.mdl_confirmarContrasenaNueva = '';
-        } else if (this.mdl_correo != this.correoLogueado) { //correo no corresponde al usuario logueado
-          this.mostrarToast('El correo ingresado no corresponde al usuario logueado', 'warning', 3000);
-          this.mdl_correo = '';
-          this.mdl_contrasenaNueva = '';
-          this.mdl_confirmarContrasenaNueva = '';
-          this.spinnerVisible = false;
-          this.botonDeshabilitado = false;
         } else if (json.status == 'success') { //actualizacion correcta
           this.mostrarToast(json.message, 'success', 1500);
           this.mostrarLoading('Volviendo a la pantalla Principal', 1500);
