@@ -83,26 +83,29 @@ export class LoginPage implements OnInit {
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
     let json = JSON.parse(json_texto);
-    console.log('DGZ: ' + json.status + ' - ' + json.message);
+    console.log('DGZ status: ' + json.status);
 
     setTimeout(async () => {
-      if (json.status == 'error') {
+      if (json.status == 'error' && json.message == 'Todos los campos son obligatorios') {
+        await this.mostrarToast(json.message, 'warning', 3000); //mensaje parametrizado en la api
+        this.botonDeshabilitado = false;
         console.log('DGZ: ' + json.message);
-        this.mostrarToast(json.message, 'warning', 3000); //mensaje parametrizado en la api
+      } else if (json.status == 'error' && json.message == 'Credenciales Inválidas') {
+        await this.mostrarToast(json.message, 'danger', 3000);
         this.mdl_correo = '';
         this.mdl_contrasena = '';
         this.botonDeshabilitado = false;
+        console.log('DGZ: ' + json.message);
       } else if (json.status == 'success') { //respuesta correcta
-        console.log('DGZ: ' + json.usuario.correo + ' ' + json.usuario.nombre + ' ' + json.usuario.apellido + ' ' + json.usuario.carrera);
         //guardando usuario que se loguea
         this.barraProgresoVisible = true; //se inicia el ion-progress-bar solo al ser login correcto
         this.db_correo = json.usuario.correo;
         this.db_nombre = json.usuario.nombre;
         this.db_apellido = json.usuario.apellido;
         this.db_carrera = json.usuario.carrera;
+        console.log('DGZ: ' + this.db_correo + ' ' + this.db_nombre + ' ' + this.db_apellido + ' ' + this.db_carrera);
         await this.guardarUsuarioLogueado(); //guardando usuario
 
-        //extras
         let extras: NavigationExtras = {
           replaceUrl: true
         }
