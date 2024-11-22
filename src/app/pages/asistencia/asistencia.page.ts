@@ -88,7 +88,7 @@ export class AsistenciaPage implements OnInit {
     //el alert se desaparece a los n seg. si el usuario no presiona fuera
     setTimeout(async () => {
       await alert.dismiss();
-    }, 1500);
+    }, 2000);
   }
 
 
@@ -154,7 +154,6 @@ export class AsistenciaPage implements OnInit {
     let datos = this.api.obtenerAsignaturasYAsistencia();
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
-    //console.log('DGZ asignaturas: ' + json_texto);
     let json = JSON.parse(json_texto);
 
     this.lista_asignaturas = []; //limpiar lista
@@ -172,17 +171,16 @@ export class AsistenciaPage implements OnInit {
         //calcular porcentaje de asistencia de la asignatura
         this.calcularPorcentajeAsistencia(asignatura.presente);
         asignatura.porcentajeAsistencia = this.porcentajeAsistencia;
-        //console.log('DGZ PORCENTAJE: ' + asignatura.porcentajeAsistencia);
 
         //determinar estado de la asignatura
         this.determinarEstadoAsignatura(asignatura.porcentajeAsistencia);
         asignatura.estado = this.estadoAsignatura;
-        //console.log('DGZ STATUS: ' + asignatura.estado);
 
         //definir color del card
         this.definirColorEstado(asignatura.estado);
         asignatura.color = this.colorPorEstado;
-        //console.log('DGZ COLOR: ' + asignatura.color);
+
+        console.log('DGZ: ' + asignatura.sigla + ' ' + asignatura.nombre + ' presente: ' + asignatura.presente + ' ausente: ' + asignatura.ausente + ' porcentaje: ' + asignatura.porcentajeAsistencia + ' estado: ' + asignatura.estado + ' color: ' + asignatura.color);
 
         this.lista_asignaturas.push(asignatura); //guardar en la lista
       }
@@ -198,12 +196,16 @@ export class AsistenciaPage implements OnInit {
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
     let json = JSON.parse(json_texto);
-    //console.log('DGZ status: ' + json.status);
+    console.log('DGZ status: ' + json.status + ' - ' + json.message);
 
     if (json.status == 'success') {
-      await this.alertQR('Presente', 'Presente para la clase de ' + this.nombreQR + ' del día ' + this.fechaClaseQR);
-    } else if (json.status == 'error') {
-      await this.alertQR('Error', json.message);
+      await this.alertQR(json.message, 'Quedó presente para la clase de ' + this.nombreQR + ' del día ' + this.fechaClaseQR);
+    } else if (json.status == 'error' && json.message == 'Usted ya se encuentra presente') {
+      await this.alertQR(json.message, 'Ya marcó asistencia para la clase de ' + this.nombreQR + ' del día ' + this.fechaClaseQR);
+    } else if (json.status == 'error' && json.message == 'La sigla ingresada no existe') {
+      await this.alertQR(json.message, 'El código QR no corresponde a ninguna asignatura registrada');
+    } else if (json.status == 'error' && json.message == 'Todos los campos son obligatorios') {
+      await this.alertQR('Error', 'El código QR es inválido');
     }
   }
 
@@ -228,19 +230,19 @@ export class AsistenciaPage implements OnInit {
         //preguntar si el lector de qr tuvo resultado
         if (resultado.barcodes.length > 0) {
           this.textoQR = resultado.barcodes[0].displayValue; //captura el resultado
-          //console.log('DGZ QR: ' + this.textoQR);
+          console.log('DGZ QR: ' + this.textoQR);
 
           //procesar y separar el texto obtenido del qr
           let textoSeparado = this.textoQR.split('|'); //funcion split
-          //console.log('DGZ QR separado: ' + textoSeparado);
+          console.log('DGZ QR separado: ' + textoSeparado);
 
           //extraer del split y asignar el texto a variables
           this.siglaQR = textoSeparado[0];
           this.nombreQR = textoSeparado[1];
           this.fechaClaseQR = textoSeparado[2];
-          // console.log('DGZ SIGLA: ' + this.siglaQR);
-          // console.log('DGZ NOMBRE: ' + this.nombreQR);
-          // console.log('DGZ FECHA: ' + this.fechaClaseQR);
+          console.log('DGZ SIGLA: ' + this.siglaQR);
+          console.log('DGZ NOMBRE: ' + this.nombreQR);
+          console.log('DGZ FECHA: ' + this.fechaClaseQR);
         }
 
         this.skeletonsCargando = true; //skeletons activados

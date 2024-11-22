@@ -157,7 +157,6 @@ export class PrincipalPage implements OnInit {
     let datos = this.api.obtenerAsignaturasYAsistencia();
     let respuesta = await lastValueFrom(datos);
     let json_texto = JSON.stringify(respuesta);
-    //console.log('DGZ asignaturas: ' + json_texto);
     let json = JSON.parse(json_texto);
 
     this.lista_asignaturas = []; //limpiar lista
@@ -168,6 +167,7 @@ export class PrincipalPage implements OnInit {
       for (let y = 0; y < json[x].length; y++) {
         let asignatura: any = {}; //objeto que recibira cada asignatura
         asignatura.nombre = json[x][y].curso_nombre;
+        console.log('DGZ asignatura: ' + asignatura.nombre);
 
         this.lista_asignaturas.push(asignatura); //guardar en la lista
       }

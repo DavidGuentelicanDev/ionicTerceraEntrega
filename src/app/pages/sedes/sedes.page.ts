@@ -119,8 +119,7 @@ export class SedesPage implements OnInit {
         sede.horario = json[i][j].HORARIO_ATENCION;
         sede.imagen = json[i][j].IMAGEN;
 
-        //guardar en la lista
-        this.lista_sedes.push(sede);
+        this.lista_sedes.push(sede); //guardar en la lista
       }
     }
   }

@@ -100,19 +100,23 @@ export class ActualizacionDatosPage implements OnInit {
         await this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
+        console.log('DGZ: campos vacios');
       } else if (this.mdl_contrasenaNueva.length < 3) { //validar largo de contraseña con min 3 caracteres, mensaje plano
         await this.mostrarToast('La nueva contraseña debe tener un largo mínimo de 3 caracteres', 'warning', 3000);
         this.mdl_contrasenaNueva = '';
         this.mdl_confirmarContrasenaNueva = '';
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
+        console.log('DGZ: largo nueva contraseña menor a 3');
       } else if (this.mdl_contrasenaNueva != this.mdl_confirmarContrasenaNueva) { //nueva contraseña y confirmar nueva contraseña distintas, mensaje plano
         await this.mostrarToast('Las contraseñas no coinciden', 'warning', 3000);
         this.mdl_contrasenaNueva = '';
         this.mdl_confirmarContrasenaNueva = '';
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
+        console.log('DGZ: contraseña nueva y confirmar contraseña NO son iguales');
       } else if (this.mdl_contrasenaNueva == this.mdl_confirmarContrasenaNueva) { //nueva contraseña y confirmar nueva contraseña iguales
+        console.log('DGZ: contraseña y confirmar contraseña SON iguales');
         if (this.mdl_correo != this.correoLogueado) { //el correo ingresado no corresponde al correo logueado
           await this.mostrarToast('El correo ingresado no corresponde al usuario logueado', 'danger', 3000);
           this.mdl_correo = '';
@@ -120,6 +124,7 @@ export class ActualizacionDatosPage implements OnInit {
           this.mdl_confirmarContrasenaNueva = '';
           this.spinnerVisible = false;
           this.botonDeshabilitado = false;
+          console.log('DGZ: correo ingresado no es igual al correo logueado');
         } else if (this.mdl_correo == this.correoLogueado) {
           //enviar datos a la api
           let datos = this.api.actualizarUsuario(this.mdl_correo, this.mdl_contrasenaNueva, this.mdl_carrera);

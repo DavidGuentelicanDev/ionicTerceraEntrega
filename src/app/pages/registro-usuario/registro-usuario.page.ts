@@ -89,6 +89,7 @@ export class RegistroUsuarioPage implements OnInit {
         await this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
+        console.log('DGZ: campos vacios');
       } else if (!correoRegex.test(this.mdl_correo)) { //valida que correo tenga formato correo, mensaje plano
         await this.mostrarToast('Debes ingresar un formato válido de correo electrónico', 'warning', 3000);
         this.mdl_correo = '';
@@ -96,6 +97,7 @@ export class RegistroUsuarioPage implements OnInit {
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
+        console.log('DGZ: formato de correo incorrecto');
       } else if (!this.mdl_correo.endsWith('duocuc.cl')) { //valida que el correo tenga dominio @duocuc.cl, mensaje plano
         await this.mostrarToast('Debes ingresar un correo válido de DUOC UC', 'danger', 3000);
         this.mdl_correo = '';
@@ -103,18 +105,21 @@ export class RegistroUsuarioPage implements OnInit {
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
+        console.log('DGZ: correo no es @duocuc.cl');
       } else if (this.mdl_contrasena.length < 3) { //validar que contraseña tenga un largo minimo de n, mensaje plano
         await this.mostrarToast('La contraseña debe tener una extensión mínima de 3 caracteres', 'warning', 3000);
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
+        console.log('DGZ: largo de contraseña menor a 3');
       } else if (this.mdl_contrasena != this.mdl_confirmarContrasena) { //valida que contraseña y confirmar contraseña sean distintas, envia mensaje plano
         await this.mostrarToast('Las contraseñas no coinciden', 'warning', 3000);
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
+        console.log('DGZ: contraseña y confirmar contraseña NO son iguales');
       } else if (this.mdl_contrasena == this.mdl_confirmarContrasena) { //contraseña y confirmar contraseña son iguales
         //enviar datos a la api y conseguir respuesta
         let datos = this.api.crearUsuario(this.mdl_correo, this.mdl_contrasena, this.mdl_nombre, this.mdl_apellido, this.mdl_carrera);
