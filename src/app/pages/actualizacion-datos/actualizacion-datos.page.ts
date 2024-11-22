@@ -91,60 +91,67 @@ export class ActualizacionDatosPage implements OnInit {
     this.botonDeshabilitado = true;
 
     setTimeout(async() => {
-      if (!this.mdl_confirmarContrasenaNueva) { //validar adicionalmente el campo confirmar contraseña nueva con mensaje plano
-        this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
+      if ( //validar adicionalmente el campo confirmar contraseña nueva con mensaje plano
+        !this.mdl_correo ||
+        !this.mdl_carrera ||
+        !this.mdl_contrasenaNueva ||
+        !this.mdl_confirmarContrasenaNueva
+      ) {
+        await this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
       } else if (this.mdl_contrasenaNueva.length < 3) { //validar largo de contraseña con min 3 caracteres, mensaje plano
-        this.mostrarToast('La nueva contraseña debe tener un largo mínimo de 3 caracteres', 'warning', 3000);
+        await this.mostrarToast('La nueva contraseña debe tener un largo mínimo de 3 caracteres', 'warning', 3000);
         this.mdl_contrasenaNueva = '';
         this.mdl_confirmarContrasenaNueva = '';
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
       } else if (this.mdl_contrasenaNueva != this.mdl_confirmarContrasenaNueva) { //nueva contraseña y confirmar nueva contraseña distintas, mensaje plano
-        this.mostrarToast('Las contraseñas no coinciden', 'warning', 3000);
-        this.mdl_contrasenaNueva = '';
-        this.mdl_confirmarContrasenaNueva = '';
-        this.spinnerVisible = false;
-        this.botonDeshabilitado = false;
-      } else if (this.mdl_correo != this.correoLogueado) { //el correo ingresado no corresponde al correo logueado
-        this.mostrarToast('El correo ingresado no corresponde al usuario logueado', 'warning', 3000);
-        this.mdl_correo = '';
+        await this.mostrarToast('Las contraseñas no coinciden', 'warning', 3000);
         this.mdl_contrasenaNueva = '';
         this.mdl_confirmarContrasenaNueva = '';
         this.spinnerVisible = false;
         this.botonDeshabilitado = false;
       } else if (this.mdl_contrasenaNueva == this.mdl_confirmarContrasenaNueva) { //nueva contraseña y confirmar nueva contraseña iguales
-        //enviar datos a la api
-        let datos = this.api.actualizarUsuario(this.mdl_correo, this.mdl_contrasenaNueva, this.mdl_carrera);
-        let respuesta = await lastValueFrom(datos);
-        let json_texto = JSON.stringify(respuesta);
-        let json = JSON.parse(json_texto);
-        //console.log('DGZ: ' + json.status + ' - ' + json.message);
-
-        //se capturan los mensajes de la api segun la respuesta
-        if (json.status == 'error') { //actualizacion incorrecta, mensaje parametrizado en la api
-          this.mostrarToast(json.message, 'warning', 3000);
-          this.botonDeshabilitado = false;
+        if (this.mdl_correo != this.correoLogueado) { //el correo ingresado no corresponde al correo logueado
+          await this.mostrarToast('El correo ingresado no corresponde al usuario logueado', 'danger', 3000);
           this.mdl_correo = '';
           this.mdl_contrasenaNueva = '';
-          this.mdl_carrera = '';
           this.mdl_confirmarContrasenaNueva = '';
-        } else if (json.status == 'success') { //actualizacion correcta
-          this.mostrarToast(json.message, 'success', 1500);
-          this.mostrarLoading('Volviendo a la pantalla Principal', 1500);
+          this.spinnerVisible = false;
+          this.botonDeshabilitado = false;
+        } else if (this.mdl_correo == this.correoLogueado) {
+          //enviar datos a la api
+          let datos = this.api.actualizarUsuario(this.mdl_correo, this.mdl_contrasenaNueva, this.mdl_carrera);
+          let respuesta = await lastValueFrom(datos);
+          let json_texto = JSON.stringify(respuesta);
+          let json = JSON.parse(json_texto);
+          console.log('DGZ: ' + json.status + ' - ' + json.message);
 
-          //redirigir al principal
-          let extras: NavigationExtras = {
-            state: {
-              alertReinicio: true //se envia extras para solicitar reiniciar app y volver a loguearse
-            },
-            replaceUrl: true
-          };
+          //se capturan los mensajes de la api segun la respuesta
+          if (json.status == 'error') { //actualizacion incorrecta, mensaje parametrizado en la api
+            await this.mostrarToast(json.message, 'danger', 3000);
+            this.botonDeshabilitado = false;
+            this.mdl_correo = '';
+            this.mdl_contrasenaNueva = '';
+            this.mdl_carrera = '';
+            this.mdl_confirmarContrasenaNueva = '';
+          } else if (json.status == 'success') { //actualizacion correcta
+            await this.mostrarToast(json.message, 'success', 1500);
+            await this.mostrarLoading('Volviendo a la pantalla Principal', 1500);
 
-          setTimeout(() => {
-            this.router.navigate(['principal'], extras);
-          }, 2000);
+            //redirigir al principal
+            let extras: NavigationExtras = {
+              state: {
+                alertReinicio: true //se envia extras para solicitar reiniciar app y volver a loguearse
+              },
+              replaceUrl: true
+            };
+
+            setTimeout(() => {
+              this.router.navigate(['principal'], extras);
+            }, 2000);
+          }
         }
 
         this.spinnerVisible = false;
