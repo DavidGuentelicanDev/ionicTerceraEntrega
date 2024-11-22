@@ -26,14 +26,14 @@ Cada uno de los módulos y funcionalidades fueron construidos de la siguiente ma
 - Para leer códigos QR se integró el BarcodeScanner del MLKit de Google.
 
 
-Los comandos necesarios para que la aplicación funcione son
+Los comandos necesarios para que la aplicación funcione son:
 
 - Para crear la app: ionic start nombre-de-la-app blank --type=angular
 
-- Para instalar SQLite: npm install cordova-sqlite-storage /-/ npm install @awesome-cordova-plugins/sqlite
+- Para instalar SQLite: a) npm install cordova-sqlite-storage // b) npm install @awesome-cordova-plugins/sqlite
 
 - Para instalar el MLKit de Google: npm install @capacitor-mlkit/barcode-scanning
 
-- Para nativizar la app en Android: ionic cap sync /-/ npm install @capacitor/android /-/ npx cap add android
+- Para nativizar la app en Android: a) ionic cap sync // b) npm install @capacitor/android // c) npx cap add android
 
-- Para personalizar splash e ícono de la app: npm install @capacitor/splash-screen /-/ npm install @capacitor/assets /-/ npx capacitor-assets generate
+- Para personalizar splash e ícono de la app: a) npm install @capacitor/splash-screen // b) npm install @capacitor/assets // c) npx capacitor-assets generate (IMPORTANTE: Para realizar este paso, primero es necesario seguir los pasos indicados en https://capacitorjs.com/docs/apis/splash-screen y en https://capacitorjs.com/docs/guides/splash-screens-and-icons)
