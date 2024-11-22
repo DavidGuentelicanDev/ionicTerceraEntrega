@@ -78,9 +78,15 @@ export class RegistroUsuarioPage implements OnInit {
     const correoRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //constante para validar formato de correo
 
     setTimeout(async () => {
-      if (this.mdl_confirmarContrasena == '') { //valida que el usuario ingrese la confirmacion de contraseña, envia mensaje plano
+      if ( //campos vacios
+        !this.mdl_nombre ||
+        !this.mdl_apellido ||
+        !this.mdl_carrera ||
+        !this.mdl_correo ||
+        !this.mdl_contrasena ||
+        !this.mdl_confirmarContrasena
+      ) {
         await this.mostrarToast('Todos los campos son obligatorios', 'warning', 3000);
-        this.mdl_contrasena = '';
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
       } else if (!correoRegex.test(this.mdl_correo)) { //valida que correo tenga formato correo, mensaje plano
@@ -91,7 +97,7 @@ export class RegistroUsuarioPage implements OnInit {
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
       } else if (!this.mdl_correo.endsWith('duocuc.cl')) { //valida que el correo tenga dominio @duocuc.cl, mensaje plano
-        await this.mostrarToast('Debes ingresar un correo válido de DUOC UC', 'warning', 3000);
+        await this.mostrarToast('Debes ingresar un correo válido de DUOC UC', 'danger', 3000);
         this.mdl_correo = '';
         this.mdl_contrasena = '';
         this.mdl_confirmarContrasena = '';
@@ -110,19 +116,15 @@ export class RegistroUsuarioPage implements OnInit {
         this.botonDeshabilitado = false;
         this.spinnerVisible = false;
       } else if (this.mdl_contrasena == this.mdl_confirmarContrasena) { //contraseña y confirmar contraseña son iguales
-        let extras: NavigationExtras = {
-          replaceUrl: true
-        }
-
         //enviar datos a la api y conseguir respuesta
         let datos = this.api.crearUsuario(this.mdl_correo, this.mdl_contrasena, this.mdl_nombre, this.mdl_apellido, this.mdl_carrera);
         let respuesta = await lastValueFrom(datos);
         let json_texto = JSON.stringify(respuesta);
         let json = JSON.parse(json_texto);
-        //console.log('DGZ: ' + json.status + ' - ' + json.message);
+        console.log('DGZ: ' + json.status + ' - ' + json.message);
 
         if (json.status == 'error') { //errores de la api
-          this.mostrarToast(json.message, 'warning', 3000); //mensaje parametrizado en la respuesta de la api
+          this.mostrarToast(json.message, 'danger', 3000); //mensaje parametrizado en la respuesta de la api
           this.mdl_correo = '';
           this.mdl_contrasena = '';
           this.mdl_confirmarContrasena = '';
@@ -130,6 +132,10 @@ export class RegistroUsuarioPage implements OnInit {
         } else if (json.status == 'success') { //validacion correcta
           await this.mostrarToast(json.message, 'success', 1500); //mensaje parametrizado en la respuesta de la api
           await this.mostrarLoading('Volviendo al Inicio de Sesión', 2000); //mostrar loading
+
+          let extras: NavigationExtras = {
+            replaceUrl: true
+          }
 
           setTimeout(() => {
             this.router.navigate(['login'], extras);

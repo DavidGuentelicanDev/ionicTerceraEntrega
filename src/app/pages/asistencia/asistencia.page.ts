@@ -18,8 +18,7 @@ export class AsistenciaPage implements OnInit {
   correoLogueado: string = '';
   //variables de las asignaturas
   lista_asignaturas: any[] = [];
-  TOTAL_CLASES: number = 5;
-  PORCENTAJE: number = 100;
+  totalClases: number = 0;
   decimalAsistencia: number = 0;
   porcentajeAsistencia: number = 0;
   estadoAsignatura: string = '';
@@ -117,10 +116,11 @@ export class AsistenciaPage implements OnInit {
     //resetear variables
     this.decimalAsistencia = 0;
     this.porcentajeAsistencia = 0;
+    this.totalClases = 5;
 
     //calculo
-    this.decimalAsistencia = presente / this.TOTAL_CLASES;
-    this.porcentajeAsistencia = this.decimalAsistencia * this.PORCENTAJE;
+    this.decimalAsistencia = presente / this.totalClases;
+    this.porcentajeAsistencia = this.decimalAsistencia * 100;
   }
 
   //status de la asignatura
